@@ -42,11 +42,11 @@ struct MainScreenView: View {
                                 .opacity(textOpacity)
                             Circle()
                                 .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
-                                .foregroundColor(Color.sosietyRed)
+                                .foregroundColor(isSOS ? Color.sosietyRed : Color.sosietyPaper)
                                 .overlay(
                                     Text("SOS")
                                         .font(.system(size: circleDiameter/2.9, weight: .bold))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(isSOS ? .white : .black)
                                 )
                                 .position(x: (circleDiameter+10)/2, y: (circleDiameter+10)/2)
                                 .offset(x:swipeDistance+swipeDistanceDelta)
