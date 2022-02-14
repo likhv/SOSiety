@@ -11,7 +11,7 @@ import SwiftUI
 struct SOSietyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SwipeButtonView()
         }
     }
 }

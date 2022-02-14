@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A4FF52B27BAB921007A2849 /* ContentViewNatasha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FF52A27BAB921007A2849 /* ContentViewNatasha.swift */; };
+		7A4FF52C27BAB921007A2849 /* ContentViewNatasha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FF52A27BAB921007A2849 /* ContentViewNatasha.swift */; };
 		7ABEBD9427B17CED00CE7C0A /* SOSietyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8427B17CEB00CE7C0A /* SOSietyApp.swift */; };
 		7ABEBD9527B17CED00CE7C0A /* SOSietyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8427B17CEB00CE7C0A /* SOSietyApp.swift */; };
-		7ABEBD9627B17CED00CE7C0A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8527B17CEB00CE7C0A /* ContentView.swift */; };
-		7ABEBD9727B17CED00CE7C0A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8527B17CEB00CE7C0A /* ContentView.swift */; };
+		7ABEBD9627B17CED00CE7C0A /* WavesAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8527B17CEB00CE7C0A /* WavesAnimationView.swift */; };
+		7ABEBD9727B17CED00CE7C0A /* WavesAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8527B17CEB00CE7C0A /* WavesAnimationView.swift */; };
 		7ABEBD9827B17CED00CE7C0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */; };
 		7ABEBD9927B17CED00CE7C0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */; };
+		7ABFD8A427B2FC3E00085FF9 /* SOSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */; };
+		7ABFD8A527B2FC3E00085FF9 /* SOSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A4FF52A27BAB921007A2849 /* ContentViewNatasha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewNatasha.swift; sourceTree = "<group>"; };
 		7ABEBD8427B17CEB00CE7C0A /* SOSietyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSietyApp.swift; sourceTree = "<group>"; };
-		7ABEBD8527B17CEB00CE7C0A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7ABEBD8527B17CEB00CE7C0A /* WavesAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavesAnimationView.swift; sourceTree = "<group>"; };
 		7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7ABEBD8B27B17CED00CE7C0A /* SOSiety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SOSiety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABEBD9127B17CED00CE7C0A /* SOSiety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SOSiety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABEBD9327B17CED00CE7C0A /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				7ABEBD8427B17CEB00CE7C0A /* SOSietyApp.swift */,
-				7ABEBD8527B17CEB00CE7C0A /* ContentView.swift */,
+				7ABEBD8527B17CEB00CE7C0A /* WavesAnimationView.swift */,
+				7A4FF52A27BAB921007A2849 /* ContentViewNatasha.swift */,
+				7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */,
 				7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -176,8 +184,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ABEBD9627B17CED00CE7C0A /* ContentView.swift in Sources */,
+				7ABEBD9627B17CED00CE7C0A /* WavesAnimationView.swift in Sources */,
+				7A4FF52B27BAB921007A2849 /* ContentViewNatasha.swift in Sources */,
 				7ABEBD9427B17CED00CE7C0A /* SOSietyApp.swift in Sources */,
+				7ABFD8A427B2FC3E00085FF9 /* SOSViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +195,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7ABEBD9727B17CED00CE7C0A /* ContentView.swift in Sources */,
+				7ABEBD9727B17CED00CE7C0A /* WavesAnimationView.swift in Sources */,
+				7A4FF52C27BAB921007A2849 /* ContentViewNatasha.swift in Sources */,
 				7ABEBD9527B17CED00CE7C0A /* SOSietyApp.swift in Sources */,
+				7ABFD8A527B2FC3E00085FF9 /* SOSViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
