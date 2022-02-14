@@ -13,17 +13,15 @@ struct MainScreenView: View {
     @State var isSOS = false
     @State var textOpacity = 1.0
     let drawHaptic = UIImpactFeedbackGenerator(style: .heavy)
-    var red = Color(red: 223 / 255, green: 80 / 255, blue: 80 / 255)
-    var white = Color(red: 248 / 255, green: 248 / 255, blue: 234 / 255)
     var circleDiameter = 80.0
     @State var notificationCountdoun = 30
     var body: some View {
         NavigationView {
             ZStack {
                 if isSOS {
-                    red.ignoresSafeArea()
+                    Color.sosietyRed.ignoresSafeArea()
                 } else {
-                    white.ignoresSafeArea()
+                    Color.sosietyPaper.ignoresSafeArea()
                 }
                 if isSOS {
                     WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-25.0-(circleDiameter/2.0), y: UIScreen.main.bounds.height/2.0+(circleDiameter/2.0)-10))
@@ -44,7 +42,7 @@ struct MainScreenView: View {
                                 .opacity(textOpacity)
                             Circle()
                                 .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
-                                .foregroundColor(red)
+                                .foregroundColor(Color.sosietyRed)
                                 .overlay(
                                     Text("SOS")
                                         .font(.system(size: circleDiameter/2.9, weight: .bold))
