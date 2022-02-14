@@ -8,63 +8,80 @@
 import SwiftUI
 
 struct MainScreenView: View {
-    @State var swipeDistance = 0.0
-    @State var swipeDistanceDelta = 0.0
-    @State var isSOS = false
-    @State var textOpacity = 1.0
-    let drawHaptic = UIImpactFeedbackGenerator(style: .heavy)
-    var circleDiameter = 80.0
-    @State var notificationCountdoun = 30
+    @EnvironmentObject var viewModel: ViewModel
+    @State var isPresenting = false
     var body: some View {
         NavigationView {
             ZStack {
-                if isSOS {
+                if viewModel.isSOS {
                     Color.sosietyRed.ignoresSafeArea()
                 } else {
                     Color.sosietyPaper.ignoresSafeArea()
                 }
-                if isSOS {
-                    WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-25.0-(circleDiameter/2.0), y: UIScreen.main.bounds.height/2.0+(circleDiameter/2.0)-10))
-                        .ignoresSafeArea()
-                }
-                Rectangle()
-                    .frame(height: circleDiameter+10, alignment: .center)
-                    .foregroundColor(Color.black)
-                    .clipShape(RoundedRectangle(cornerRadius: circleDiameter+10, style: .circular))
-                    .overlay(
-                        ZStack {
-                            Text(isSOS ? "Swipe left to stop" : "Swipe right to start")
-                                .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(.white.opacity(0.3))
-                                .padding(!isSOS ? .leading : .trailing, 20)
-                                .animation(.easeInOut, value: isSOS)
-                                .multilineTextAlignment(.center)
-                                .opacity(textOpacity)
-                            Circle()
-                                .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
-                                .foregroundColor(isSOS ? Color.sosietyRed : Color.sosietyPaper)
-                                .overlay(
-                                    Text("SOS")
-                                        .font(.system(size: circleDiameter/2.9, weight: .bold))
-                                        .foregroundColor(isSOS ? .white : .black)
-                                )
-                                .position(x: (circleDiameter+10)/2, y: (circleDiameter+10)/2)
-                                .offset(x:swipeDistance+swipeDistanceDelta)
-                                .simultaneousGesture(drag)
-                        })
-                    .padding(.horizontal, 20)
-                    .ignoresSafeArea()
-                
-                HeaderView()
+                TumblerView(isSOS: $viewModel.isSOS)
+                HeaderView(isSOS: viewModel.isSOS)
             }
             .navigationTitle("#SOSiety")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(leading: NavigationLink(destination: InformationView(), label: {
-                Image(systemName: "info.circle")
-            }), trailing: NavigationLink(destination: SettingsView(), label: {
-                Image(systemName: "gearshape")
-            }))
+            .navigationBarItems(
+                leading:
+                    Button {isPresenting = true} label: {
+                        Image(systemName: "info.circle")},
+                trailing:
+                    NavigationLink(destination: SettingsView(), label: {
+                        Image(systemName: "gearshape")
+                    }))
             .accentColor(.black)
+            .fullScreenCover(isPresented: $isPresenting) {
+                InformationView(isPresenting: $isPresenting)
+            }
+        }
+    }
+}
+
+struct TumblerView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    @Binding var isSOS: Bool
+    @State var swipeDistance = 0.0
+    @State var swipeDistanceDelta = 0.0
+    @State var textOpacity = 1.0
+    let drawHaptic = UIImpactFeedbackGenerator(style: .heavy)
+    var circleDiameter = 80.0
+    var body: some View {
+        ZStack {
+            if isSOS {
+                WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-25.0-(circleDiameter/2.0), y: UIScreen.main.bounds.height/2.0+(circleDiameter/2.0)-10))
+                    .ignoresSafeArea()
+            }
+            Rectangle()
+                .frame(height: circleDiameter+10, alignment: .center)
+                .foregroundColor(Color.black)
+                .clipShape(RoundedRectangle(cornerRadius: circleDiameter+10, style: .circular))
+                .overlay(
+                    ZStack {
+                        Text(isSOS ? "Swipe left to stop" : "Swipe right to start")
+                            .font(.system(size: 18, weight: .medium))
+                            .foregroundColor(.white.opacity(0.4))
+                            .padding(!isSOS ? .leading : .trailing, 40)
+                            .animation(.easeInOut, value: isSOS)
+                            .multilineTextAlignment(.center)
+                            .opacity(textOpacity)
+                        Circle()
+                            .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
+                        //                            .foregroundColor(Color.sosietyRed)
+                            .foregroundColor(isSOS ? Color.sosietyRed : Color.sosietyPaper)
+                            .overlay(
+                                Text("SOS")
+                                    .font(.system(size: circleDiameter/2.9, weight: .bold))
+                                //                                    .foregroundColor(.white)
+                                    .foregroundColor(isSOS ? .white : .black)
+                            )
+                            .position(x: (circleDiameter+10)/2, y: (circleDiameter+10)/2)
+                            .offset(x:swipeDistance+swipeDistanceDelta)
+                            .simultaneousGesture(drag)
+                    })
+                .padding(.horizontal, 20)
+                .ignoresSafeArea()
         }
     }
     var drag: some Gesture {
@@ -91,11 +108,11 @@ struct MainScreenView: View {
                 withAnimation(.easeInOut){
                     if swipeDistanceDelta + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter - ((UIScreen.main.bounds.width-40)/2) {
                         swipeDistance = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
-                        isSOS = true
+                        viewModel.startSOS()
                         drawHaptic.impactOccurred()
                     } else {
                         swipeDistance = .zero
-                        isSOS = false
+                        viewModel.stopSOS()
                         drawHaptic.impactOccurred()
                     }
                     swipeDistanceDelta = .zero
@@ -105,14 +122,15 @@ struct MainScreenView: View {
 }
 
 struct HeaderView: View {
-    var headerText = "Everything is ready"
+    var isSOS: Bool
+    var headerText: String {isSOS ? "SOS mode\nis turned on" : "Everything\nis ready"}
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(headerText)
-                    .font(.system(size: 36, weight: .bold))
+                    .font(.system(size: 38, weight: .bold))
                     .multilineTextAlignment(.leading)
-                    .padding(.leading, 20)
+                    .padding(.leading, 24)
                     .padding(.top, 40)
                     .padding(.trailing, 60)
                 Spacer()
@@ -140,7 +158,9 @@ struct WavesAnimationView: View {
             }
         }
         .onAppear() {
-            circlesArray.append(AnimatedCircle(center:center))
+            if circlesArray.count == 0 {
+                circlesArray.append(AnimatedCircle(center:center))
+            }
         }
         .onReceive(wavesTimer) { input in
             circlesArray.append(AnimatedCircle(center:center))
@@ -162,9 +182,9 @@ struct AnimatedCircle: View, Identifiable {
     @State var circleWidthheight = 50.0
     var body: some View {
         Circle()
-            .stroke(style: StrokeStyle(lineWidth: 2))
+            .stroke(style: StrokeStyle(lineWidth: 1))
             .frame(width: circleWidthheight, height: circleWidthheight, alignment: .center)
-            .foregroundColor(Color(red: 200 / 255, green: 70 / 255, blue: 70 / 255))
+            .foregroundColor(.white.opacity(0.5))
             .position(center)
             .onAppear() {
                 withAnimation(.linear(duration: 30).repeatForever()) {
@@ -200,5 +220,6 @@ struct AnimatedCircle3D: View, Identifiable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
+            .environmentObject(ViewModel())
     }
 }
