@@ -54,12 +54,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7A8B647E27BAC10B008A6D95 /* Models */ = {
+		7A8B647E27BAC10B008A6D95 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */,
 			);
-			path = Models;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		7A8B647F27BAC110008A6D95 /* Views */ = {
@@ -87,7 +87,7 @@
 				7ABEBD8427B17CEB00CE7C0A /* SOSietyApp.swift */,
 				7A8B648027BAC170008A6D95 /* Extensions.swift */,
 				7A8B647F27BAC110008A6D95 /* Views */,
-				7A8B647E27BAC10B008A6D95 /* Models */,
+				7A8B647E27BAC10B008A6D95 /* ViewModels */,
 				7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */,
 			);
 			path = Shared;

@@ -60,20 +60,20 @@ struct TumblerView: View {
                 .overlay(
                     ZStack {
                         Text(isSOS ? "Swipe left to stop" : "Swipe right to start")
-                            .font(.system(size: 18, weight: .medium))
-                            .foregroundColor(.white.opacity(0.4))
-                            .padding(!isSOS ? .leading : .trailing, 40)
+                            .font(.system(size: 18, weight: .regular))
+                            .foregroundColor(.sosietyPaper.opacity(0.8))
+                            .padding(!isSOS ? .leading : .trailing, 10)
                             .animation(.easeInOut, value: isSOS)
                             .multilineTextAlignment(.center)
                             .opacity(textOpacity)
                         Circle()
                             .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
-                        //                            .foregroundColor(Color.sosietyRed)
+                        //  .foregroundColor(Color.sosietyRed)
                             .foregroundColor(isSOS ? Color.sosietyRed : Color.sosietyPaper)
                             .overlay(
                                 Text("SOS")
                                     .font(.system(size: circleDiameter/2.9, weight: .bold))
-                                //                                    .foregroundColor(.white)
+                                //  .foregroundColor(.white)
                                     .foregroundColor(isSOS ? .white : .black)
                             )
                             .position(x: (circleDiameter+10)/2, y: (circleDiameter+10)/2)
@@ -177,14 +177,14 @@ struct WavesAnimationView: View {
 }
 
 struct AnimatedCircle: View, Identifiable {
+    @State var circleWidthheight = 50.0
     var id = UUID()
     var center = CGPoint.zero
-    @State var circleWidthheight = 50.0
     var body: some View {
         Circle()
             .stroke(style: StrokeStyle(lineWidth: 1))
             .frame(width: circleWidthheight, height: circleWidthheight, alignment: .center)
-            .foregroundColor(.white.opacity(0.5))
+            .foregroundColor(.sosietyPaper.opacity(0.5))
             .position(center)
             .onAppear() {
                 withAnimation(.linear(duration: 30).repeatForever()) {
@@ -195,10 +195,10 @@ struct AnimatedCircle: View, Identifiable {
 }
 
 struct AnimatedCircle3D: View, Identifiable {
+    @State var circleWidthheight = 0.0
     var id = UUID()
     var center = CGPoint.zero
     var red = Color(red: 223 / 255, green: 80 / 255, blue: 80 / 255)
-    @State var circleWidthheight = 0.0
     var body: some View {
         Circle()
             .strokeBorder(red, lineWidth: circleWidthheight/8)
