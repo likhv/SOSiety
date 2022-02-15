@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct InformationView: View {
-    @Binding var isPresenting: Bool
+    @Binding var isInfoPresenting: Bool
     var body: some View {
         ZStack {
             Color.sosietyPaper.ignoresSafeArea()
             InstructionView()
-            Button {isPresenting = false} label: {
+            Button {isInfoPresenting = false} label: {
                 Image(systemName: "multiply")
                     .foregroundColor(.black)
                     .font(.system(size: 20))
@@ -37,7 +37,7 @@ struct InstructionView: View {
 
 struct InformationView_Previews: PreviewProvider {
     static var previews: some View {
-        MainScreenView(isPresenting: true)
+        MainScreenView(isInfoPresenting: true)
             .environmentObject(ViewModel())
     }
 }

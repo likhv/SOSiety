@@ -14,7 +14,7 @@ class ViewModel: ObservableObject {
     @Published var isCheckIn: Bool = false
     @Published var notificationCountdown: Int = 30
     @Published var history: [String] = []
-    
+        
     func startCheckIn() {
         isCheckIn = true
     }

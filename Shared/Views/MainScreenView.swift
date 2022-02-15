@@ -9,7 +9,11 @@ import SwiftUI
 
 struct MainScreenView: View {
     @EnvironmentObject var viewModel: ViewModel
-    @State var isPresenting = false
+    @State var isInfoPresenting = false
+    @State var isFAQOpened = false
+    @State var FAQHeight = 0.0
+    @State var tumblerOffset = 0.0
+    @State var headerOpacity = 1.0
     var body: some View {
         NavigationView {
             ZStack {
@@ -18,23 +22,86 @@ struct MainScreenView: View {
                 } else {
                     Color.sosietyPaper.ignoresSafeArea()
                 }
-                TumblerView(isSOS: $viewModel.isSOS)
+
+                TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
+                    .offset(y: tumblerOffset)
                 HeaderView(isSOS: viewModel.isSOS)
+                    .opacity(headerOpacity)
+                    .offset(y: tumblerOffset/4)
+                VStack {
+                    Spacer()
+                    Button { toggleFAQ() } label: {
+                        VStack {
+                            Text("What's next")
+                                .font(.system(size: 18, weight: .semibold))
+                                .padding(.bottom, 5)
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 18, weight: .semibold))
+                        }
+                    }
+                }
+                FAQView(isFAQPresenting: $isFAQOpened)
+                    .opacity(1-headerOpacity)
+                    .offset(y: (UIScreen.main.bounds.height/3 + tumblerOffset) * 1.5)
             }
             .navigationTitle("#SOSiety")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading:
-                    Button {isPresenting = true} label: {
+                    Button {isInfoPresenting = true} label: {
                         Image(systemName: "info.circle")},
                 trailing:
                     NavigationLink(destination: SettingsView(), label: {
                         Image(systemName: "gearshape")
                     }))
             .accentColor(.black)
-            .fullScreenCover(isPresented: $isPresenting) {
-                InformationView(isPresenting: $isPresenting)
+            .fullScreenCover(isPresented: $isInfoPresenting) {
+                InformationView(isInfoPresenting: $isInfoPresenting)
             }
+        }
+    }
+    func toggleFAQ() {
+        withAnimation(.spring()) {
+            if isFAQOpened {
+                isFAQOpened = false
+                tumblerOffset = 0
+                headerOpacity = 1.0
+            } else {
+                isFAQOpened = true
+                tumblerOffset -= UIScreen.main.bounds.height/3
+                headerOpacity = 0.0
+            }
+//            FAQHeight = UIScreen.main.bounds.height - 250.0
+        }
+    }
+    
+}
+
+struct FAQView: View {
+    @EnvironmentObject var viewModel: ViewModel
+    @Binding var isFAQPresenting: Bool
+    var body: some View {
+        VStack {
+            Rectangle()
+                .frame(width: UIScreen.main.bounds.width-42, height: UIScreen.main.bounds.width-42, alignment: .center)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .circular))
+                .foregroundColor(.sosietyPaper)
+                .overlay(
+                    VStack(alignment: .leading) {
+                        Text("Tile")
+                        Text("Text here")
+                    }
+                )
+//            Spacer()
+//            Button { viewModel.openFAQ() } label: {
+//                VStack {
+//                    Text("What's next")
+//                        .font(.system(size: 18, weight: .semibold))
+//                        .padding(.bottom, 5)
+//                    Image(systemName: "chevron.down")
+//                        .font(.system(size: 18, weight: .semibold))
+//                }
+//            }
         }
     }
 }
@@ -42,6 +109,7 @@ struct MainScreenView: View {
 struct TumblerView: View {
     @EnvironmentObject var viewModel: ViewModel
     @Binding var isSOS: Bool
+    @Binding var isFAQOpened: Bool
     @State var swipeDistance = 0.0
     @State var swipeDistanceDelta = 0.0
     @State var textOpacity = 1.0
@@ -123,7 +191,7 @@ struct TumblerView: View {
 
 struct HeaderView: View {
     var isSOS: Bool
-    var headerText: String {isSOS ? "SOS mode\nis turned on" : "Everything\nis ready"}
+    var headerText: String {isSOS ? "SOS mode\nlaunched" : "Everything\nis ready"}
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -131,7 +199,7 @@ struct HeaderView: View {
                     .font(.system(size: 38, weight: .bold))
                     .multilineTextAlignment(.leading)
                     .padding(.leading, 24)
-                    .padding(.top, 40)
+                    .padding(.top, 30)
                     .padding(.trailing, 60)
                 Spacer()
             }
@@ -157,6 +225,7 @@ struct WavesAnimationView: View {
                 print(circlesArray.count)
             }
         }
+        .ignoresSafeArea()
         .onAppear() {
             if circlesArray.count == 0 {
                 circlesArray.append(AnimatedCircle(center:center))
