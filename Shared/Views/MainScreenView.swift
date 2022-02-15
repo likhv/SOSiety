@@ -44,16 +44,36 @@ struct MainScreenView: View {
                     .opacity(1-headerOpacity)
                     .offset(y: (UIScreen.main.bounds.height/3 + tumblerOffset) * 1.5)
             }
-            .navigationTitle("#SOSiety")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading:
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("#SOSiety")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.black)
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {isInfoPresenting = true} label: {
-                        Image(systemName: "info.circle")},
-                trailing:
+                        Image(systemName: "info.circle")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.black)
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView(), label: {
                         Image(systemName: "gearshape")
-                    }))
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.black)
+                    })
+               }
+            }
+//            .navigationBarItems(
+//                leading:
+//                    Button {isInfoPresenting = true} label: {
+//                        Image(systemName: "info.circle")},
+//                trailing:
+//                    NavigationLink(destination: SettingsView(), label: {
+//                        Image(systemName: "gearshape")
+//                    }))
             .accentColor(.black)
             .fullScreenCover(isPresented: $isInfoPresenting) {
                 InformationView(isInfoPresenting: $isInfoPresenting)
@@ -155,7 +175,7 @@ struct TumblerView: View {
     var drag: some Gesture {
         DragGesture(minimumDistance: 2.0, coordinateSpace: .global)
             .onChanged { value in
-                withAnimation(.linear(duration: 0.2)){
+                withAnimation(.spring()){
                     
                     if value.translation.width + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter {
                         swipeDistanceDelta = UIScreen.main.bounds.width - 40 - 10 - circleDiameter - swipeDistance
@@ -170,7 +190,7 @@ struct TumblerView: View {
                 }
             }
             .onEnded { value in
-                withAnimation(.spring().delay(0.2)){
+                withAnimation(.spring()){
                     textOpacity = 1.0
                 }
                 withAnimation(.easeInOut){
@@ -198,6 +218,7 @@ struct HeaderView: View {
                 Text(headerText)
                     .font(.system(size: 38, weight: .bold))
                     .multilineTextAlignment(.leading)
+                    .foregroundColor(.black)
                     .padding(.leading, 24)
                     .padding(.top, 30)
                     .padding(.trailing, 60)

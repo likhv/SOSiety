@@ -12,6 +12,7 @@ struct SOSietyApp: App {
     var body: some Scene {
         WindowGroup {
             MainScreenView()
+                .environmentObject(ViewModel())
         }
     }
 }
