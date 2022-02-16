@@ -21,6 +21,7 @@ class ViewModel: ObservableObject {
     @Published var isCheckIn: Bool = false
     @Published var notificationCountdown: Int = 30
     @Published var history: [String] = []
+    @Published var statusConsole: [String] = []
     @Published var adviceList: [Advice] = [
         Advice(),
         Advice(),
@@ -39,11 +40,13 @@ class ViewModel: ObservableObject {
     
     func startSOS() {
         isSOS = true
+        statusConsole.append("Sending in 0:15")
     }
     
     func stopSOS() {
         isSOS = false
         notificationCountdown = 30
+        statusConsole = []
     }
     
     func sendSMS() {

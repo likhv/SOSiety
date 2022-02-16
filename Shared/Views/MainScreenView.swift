@@ -28,8 +28,11 @@ struct MainScreenView: View {
                         .offset(y: tumblerOffset)
                         .ignoresSafeArea()
                 }
+                StatusConsole()
+                    .offset(y: 80+tumblerOffset)
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
+                
                 HeaderView(isSOS: viewModel.isSOS)
                     .opacity(headerOpacity)
                     .offset(y: tumblerOffset/4)
@@ -130,6 +133,19 @@ struct MainScreenView: View {
         }
     }
     
+}
+
+struct StatusConsole: View {
+    @EnvironmentObject var viewModel: ViewModel
+    var body: some View {
+        VStack {
+            ForEach(viewModel.statusConsole, id: \.self) { status in
+               Text(status)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.black)
+            }
+        }
+    }
 }
 
 struct AdviceTabView: View {
