@@ -35,7 +35,7 @@ struct MainScreenView: View {
                     .offset(y: tumblerOffset/4)
                 AdviceTabView(isFAQPresenting: $isFAQOpened)
                     .opacity(1-headerOpacity)
-                    .offset(y: (UIScreen.main.bounds.height/1.9 + tumblerOffset) * 1.5)
+                    .offset(y: (UIScreen.main.bounds.height/1.95 + tumblerOffset) * 1.5)
                 VStack {
                     Spacer()
                     Button { toggleFAQ() } label: {
@@ -48,13 +48,14 @@ struct MainScreenView: View {
                                     .font(.system(size: 18, weight: .semibold))
                                     .padding(.bottom, 4)
                             }
-                            .opacity(isFAQOpened ? 0 : 1)
+//                            .opacity(isFAQOpened ? 0 : 1)
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 18, weight: .semibold))
                                 .opacity(isFAQOpened ? 0 : 1)
                         }
                     }
                 }
+//                .offset(y: (UIScreen.main.bounds.height/1.85 + tumblerOffset) * 1.5)
 
             }
             .gesture(swipeUp)
@@ -96,6 +97,13 @@ struct MainScreenView: View {
     }
     var swipeUp: some Gesture {
         DragGesture(coordinateSpace: .global)
+            .onChanged { value in
+                if value.translation.height < -100 && !isFAQOpened {
+                    toggleFAQ()
+                } else if value.translation.height > 100 && isFAQOpened {
+                    toggleFAQ()
+                }
+            }
             .onEnded { value in
                 if value.translation.height < -100 && !isFAQOpened {
                     toggleFAQ()
@@ -128,17 +136,21 @@ struct AdviceTabView: View {
     @Binding var isFAQPresenting: Bool
 
     var body: some View {
-        TabView {
-                AdviceItemView()
-                AdviceItemView()
-                AdviceItemView()
-                AdviceItemView()
+        VStack {
+            Divider()
+            TabView {
+                    AdviceItemView()
+                    AdviceItemView()
+                    AdviceItemView()
+                    AdviceItemView()
+            }
+            .statusBar(hidden: true)
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .statusBar(hidden: true)
-        .frame(width: UIScreen.main.bounds.width, height:  240)
-        .tabViewStyle(.page)
+        .frame(width: UIScreen.main.bounds.width, height:  180)
+//        .tabViewStyle(.page)
         .onAppear() {
-            UIPageControl.appearance().pageIndicatorTintColor = .gray
+            UIPageControl.appearance().pageIndicatorTintColor = .black.withAlphaComponent(0.3)
             UIPageControl.appearance().currentPageIndicatorTintColor = .black
         }
 //        .indexViewStyle(.page(backgroundDisplayMode: .never))
@@ -158,9 +170,11 @@ struct AdviceItemView: View {
                 Text(adviceText)
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                
             }
-            .padding(30)
-            Spacer()
+            .padding(.horizontal, 30)
+//            Spacer()
         }
         
     }
@@ -243,44 +257,68 @@ struct TumblerView: View {
                             )
                             .position(x: (circleDiameter+10)/2, y: (circleDiameter+10)/2)
                             .offset(x:swipeDistance+swipeDistanceDelta)
-                            .simultaneousGesture(drag)
+                            .simultaneousGesture(dragSOS)
                     })
                 .padding(.horizontal, 20)
 //                .ignoresSafeArea()
         }
     }
-    var drag: some Gesture {
+    var dragSOS: some Gesture {
+        
         DragGesture(coordinateSpace: .global)
             .onChanged { value in
-                withAnimation(){
-                    
+                withAnimation(.linear){
+                    textOpacity = 0.0
+                }
+                
+                withAnimation(.linear){
                     if value.translation.width + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter {
                         swipeDistanceDelta = UIScreen.main.bounds.width - 40 - 10 - circleDiameter - swipeDistance
-                        
+
                     } else if value.translation.width + swipeDistance < 5.0 {
                         swipeDistanceDelta = -swipeDistance
-                        
+
                     } else {
                         swipeDistanceDelta = value.translation.width
-                        textOpacity = 0.0
                     }
                 }
             }
             .onEnded { value in
-                withAnimation(){
+                let leftPosition = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
+                let rightPosition = 0.0
+
+                withAnimation(.linear){
                     textOpacity = 1.0
                 }
-                withAnimation(){
-                    if swipeDistanceDelta + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter - ((UIScreen.main.bounds.width-40)/2) {
-                        swipeDistance = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
-                        viewModel.startSOS()
-                        drawHaptic.impactOccurred()
+                withAnimation(.linear){
+                    if viewModel.isSOS {
+                        if swipeDistanceDelta + swipeDistance < rightPosition + 50 {
+                            swipeDistance = rightPosition
+                            viewModel.stopSOS()
+                            drawHaptic.impactOccurred()
+                        }
                     } else {
-                        swipeDistance = .zero
-                        viewModel.stopSOS()
-                        drawHaptic.impactOccurred()
+                        if swipeDistanceDelta + swipeDistance > leftPosition - 50 {
+                            swipeDistance = leftPosition
+                            viewModel.startSOS()
+                            drawHaptic.impactOccurred()
+                        }
                     }
                     swipeDistanceDelta = .zero
+                        
+                        
+                        
+                        
+//                    if swipeDistanceDelta + swipeDistance > UIScreen.main.bounds.width - 40 - 10  {
+//                        swipeDistance = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
+//                        viewModel.startSOS()
+//                        drawHaptic.impactOccurred()
+//                    } else {
+//                        swipeDistance = .zero
+//                        viewModel.stopSOS()
+//                        drawHaptic.impactOccurred()
+//                    }
+//                    swipeDistanceDelta = .zero
                 }
             }
     }
@@ -332,9 +370,13 @@ struct WavesAnimationView: View {
         .onReceive(wavesTimer) { input in
             if counted % 4 == 0 {
                 circlesArray.append(AnimatedCircle(center:center))
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    drawHaptic.impactOccurred()
-                }
+//                drawHaptic.impactOccurred()
+//                DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+//                    drawHaptic.impactOccurred()
+//                }
+//                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+//                    drawHaptic.impactOccurred()
+//                }
             }
             counted += 1
         }
@@ -352,7 +394,7 @@ struct AnimatedCircle: View, Identifiable {
     var center = CGPoint.zero
     var body: some View {
         Circle()
-            .stroke(style: StrokeStyle(lineWidth: 1))
+            .stroke(style: StrokeStyle(lineWidth: 0.8))
             .frame(width: circleWidthheight, height: circleWidthheight, alignment: .center)
             .foregroundColor(.sosietyPaper.opacity(0.75))
             .position(center)
