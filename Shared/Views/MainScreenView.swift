@@ -14,6 +14,7 @@ struct MainScreenView: View {
     @State var FAQHeight = 0.0
     @State var tumblerOffset = 0.0
     @State var headerOpacity = 1.0
+    let drawHaptic = UIImpactFeedbackGenerator(style: .heavy)
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,28 +23,41 @@ struct MainScreenView: View {
                 } else {
                     Color.sosietyPaper.ignoresSafeArea()
                 }
-
+                if viewModel.isSOS {
+                    WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
+                        .offset(y: tumblerOffset)
+                        .ignoresSafeArea()
+                }
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
                 HeaderView(isSOS: viewModel.isSOS)
                     .opacity(headerOpacity)
                     .offset(y: tumblerOffset/4)
+                AdviceTabView(isFAQPresenting: $isFAQOpened)
+                    .opacity(1-headerOpacity)
+                    .offset(y: (UIScreen.main.bounds.height/1.9 + tumblerOffset) * 1.5)
                 VStack {
                     Spacer()
                     Button { toggleFAQ() } label: {
                         VStack {
-                            Text("What's next")
-                                .font(.system(size: 18, weight: .semibold))
-                                .padding(.bottom, 5)
+                            HStack {
+                                Text(isFAQOpened ? "Close advice" : "Legal advice")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .padding(.bottom, 5)
+                                Image(systemName: isFAQOpened ? "multiply" : "")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .padding(.bottom, 4)
+                            }
+                            .opacity(isFAQOpened ? 0 : 1)
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 18, weight: .semibold))
+                                .opacity(isFAQOpened ? 0 : 1)
                         }
                     }
                 }
-                FAQView(isFAQPresenting: $isFAQOpened)
-                    .opacity(1-headerOpacity)
-                    .offset(y: (UIScreen.main.bounds.height/3 + tumblerOffset) * 1.5)
+
             }
+            .gesture(swipeUp)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -80,16 +94,28 @@ struct MainScreenView: View {
             }
         }
     }
+    var swipeUp: some Gesture {
+        DragGesture(coordinateSpace: .global)
+            .onEnded { value in
+                if value.translation.height < -100 && !isFAQOpened {
+                    toggleFAQ()
+                } else if value.translation.height > 100 && isFAQOpened {
+                    toggleFAQ()
+                }
+            }
+    }
     func toggleFAQ() {
         withAnimation(.spring()) {
             if isFAQOpened {
                 isFAQOpened = false
                 tumblerOffset = 0
                 headerOpacity = 1.0
+                drawHaptic.impactOccurred()
             } else {
                 isFAQOpened = true
                 tumblerOffset -= UIScreen.main.bounds.height/3
                 headerOpacity = 0.0
+                drawHaptic.impactOccurred()
             }
 //            FAQHeight = UIScreen.main.bounds.height - 250.0
         }
@@ -97,19 +123,74 @@ struct MainScreenView: View {
     
 }
 
-struct FAQView: View {
+struct AdviceTabView: View {
     @EnvironmentObject var viewModel: ViewModel
     @Binding var isFAQPresenting: Bool
+
+    var body: some View {
+        TabView {
+                AdviceItemView()
+                AdviceItemView()
+                AdviceItemView()
+                AdviceItemView()
+        }
+        .statusBar(hidden: true)
+        .frame(width: UIScreen.main.bounds.width, height:  240)
+        .tabViewStyle(.page)
+        .onAppear() {
+            UIPageControl.appearance().pageIndicatorTintColor = .gray
+            UIPageControl.appearance().currentPageIndicatorTintColor = .black
+        }
+//        .indexViewStyle(.page(backgroundDisplayMode: .never))
+    }
+}
+
+struct AdviceItemView: View {
+    var adviceTitle = "Try not to sign any papers"
+    var adviceText = "1/12\n\nIf you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+//                Text(adviceTitle)
+//                    .font(.system(size: 26, weight: .bold))
+//                    .foregroundColor(.black)
+//                    .padding(.bottom, 14)
+                Text(adviceText)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.black)
+            }
+            .padding(30)
+            Spacer()
+        }
+        
+    }
+}
+
+struct AdviceItemViewOld: View {
+    @EnvironmentObject var viewModel: ViewModel
+    var adviceTitle = "Try not to sign any papers"
+    var adviceText = "If you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
     var body: some View {
         VStack {
-            Rectangle()
+            RoundedRectangle(cornerRadius: 10, style: .circular)
                 .frame(width: UIScreen.main.bounds.width-42, height: UIScreen.main.bounds.width-42, alignment: .center)
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .circular))
-                .foregroundColor(.sosietyPaper)
+                .foregroundColor(.white)
+//                .shadow(color: .black, radius: 15, x: 0, y: 15)
                 .overlay(
-                    VStack(alignment: .leading) {
-                        Text("Tile")
-                        Text("Text here")
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(adviceTitle)
+                                .font(.system(size: 26, weight: .bold))
+                                .foregroundColor(.black)
+                                .padding(.bottom, 14)
+                            Text(adviceText)
+                                .font(.system(size: 18, weight: .medium))
+                                .foregroundColor(.black)
+                            Spacer()
+                        }
+                        .padding(30)
+                        .padding(.trailing, 10)
+                        Spacer()
                     }
                 )
 //            Spacer()
@@ -137,10 +218,6 @@ struct TumblerView: View {
     var circleDiameter = 80.0
     var body: some View {
         ZStack {
-            if isSOS {
-                WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-25.0-(circleDiameter/2.0), y: UIScreen.main.bounds.height/2.0+(circleDiameter/2.0)-10))
-                    .ignoresSafeArea()
-            }
             Rectangle()
                 .frame(height: circleDiameter+10, alignment: .center)
                 .foregroundColor(Color.black)
@@ -169,13 +246,13 @@ struct TumblerView: View {
                             .simultaneousGesture(drag)
                     })
                 .padding(.horizontal, 20)
-                .ignoresSafeArea()
+//                .ignoresSafeArea()
         }
     }
     var drag: some Gesture {
-        DragGesture(minimumDistance: 2.0, coordinateSpace: .global)
+        DragGesture(coordinateSpace: .global)
             .onChanged { value in
-                withAnimation(.spring()){
+                withAnimation(){
                     
                     if value.translation.width + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter {
                         swipeDistanceDelta = UIScreen.main.bounds.width - 40 - 10 - circleDiameter - swipeDistance
@@ -190,10 +267,10 @@ struct TumblerView: View {
                 }
             }
             .onEnded { value in
-                withAnimation(.spring()){
+                withAnimation(){
                     textOpacity = 1.0
                 }
-                withAnimation(.easeInOut){
+                withAnimation(){
                     if swipeDistanceDelta + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter - ((UIScreen.main.bounds.width-40)/2) {
                         swipeDistance = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
                         viewModel.startSOS()
@@ -235,28 +312,31 @@ struct WavesAnimationView: View {
     @State var circleHeight = 0.0
     let drawHaptic = UIImpactFeedbackGenerator(style: .heavy)
     var center = CGPoint.zero
-    let wavesTimer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    let wavesTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var counted = 0
     var body: some View {
         ZStack {
             ForEach(circlesArray, id: \.id) { circle in
                 circle
             }
             .onChange(of: circlesArray.count) { array in
-                if array > 4 { circlesArray.remove(at: 0)}
+                if array > 5 { circlesArray.remove(at: 0)}
                 print(circlesArray.count)
             }
         }
-        .ignoresSafeArea()
-        .onAppear() {
-            if circlesArray.count == 0 {
-                circlesArray.append(AnimatedCircle(center:center))
-            }
-        }
+//        .onAppear() {
+//            if circlesArray.count == 0 {
+//                circlesArray.append(AnimatedCircle(center:center))
+//            }
+//        }
         .onReceive(wavesTimer) { input in
-            circlesArray.append(AnimatedCircle(center:center))
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                drawHaptic.impactOccurred()
+            if counted % 4 == 0 {
+                circlesArray.append(AnimatedCircle(center:center))
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    drawHaptic.impactOccurred()
+                }
             }
+            counted += 1
         }
     }
     func removeCircle() {
@@ -274,13 +354,15 @@ struct AnimatedCircle: View, Identifiable {
         Circle()
             .stroke(style: StrokeStyle(lineWidth: 1))
             .frame(width: circleWidthheight, height: circleWidthheight, alignment: .center)
-            .foregroundColor(.sosietyPaper.opacity(0.5))
+            .foregroundColor(.sosietyPaper.opacity(0.75))
             .position(center)
+            .opacity(1.0-(circleWidthheight/1000))
             .onAppear() {
                 withAnimation(.linear(duration: 30).repeatForever()) {
                     circleWidthheight = 2000
                 }
             }
+            .ignoresSafeArea()
     }
 }
 
