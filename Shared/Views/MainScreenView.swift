@@ -35,26 +35,27 @@ struct MainScreenView: View {
                     .offset(y: tumblerOffset/4)
                 AdviceTabView(isFAQPresenting: $isFAQOpened)
                     .opacity(1-headerOpacity)
-                    .offset(y: (UIScreen.main.bounds.height/1.95 + tumblerOffset) * 1.5)
+                    .offset(y: (UIScreen.main.bounds.height/1.77 + tumblerOffset) * 1.5)
                 VStack {
                     Spacer()
                     Button { toggleFAQ() } label: {
                         VStack {
                             HStack {
-                                Text(isFAQOpened ? "Close advice" : "Legal advice")
-                                    .font(.system(size: 18, weight: .semibold))
+                                Text(isFAQOpened ? "Close advices" : "Legal advices")
+                                    .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 5)
                                 Image(systemName: isFAQOpened ? "multiply" : "")
-                                    .font(.system(size: 18, weight: .semibold))
+                                    .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 4)
                             }
 //                            .opacity(isFAQOpened ? 0 : 1)
                             Image(systemName: "chevron.down")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 18, weight: .medium))
                                 .opacity(isFAQOpened ? 0 : 1)
                         }
                     }
                 }
+                .offset(y: tumblerOffset/1.55)
 //                .offset(y: (UIScreen.main.bounds.height/1.85 + tumblerOffset) * 1.5)
 
             }
@@ -136,41 +137,58 @@ struct AdviceTabView: View {
     @Binding var isFAQPresenting: Bool
 
     var body: some View {
-        VStack {
-            Divider()
-            TabView {
-                    AdviceItemView()
-                    AdviceItemView()
-                    AdviceItemView()
-                    AdviceItemView()
+        ZStack {
+//            Rectangle()
+//                .foregroundColor(.sosietyPaper)
+//                .opacity(0.8)
+            VStack {
+                Divider()
+                TabView {
+                    ForEach(0..<viewModel.adviceList.count) { n in
+                        AdviceItemView(number: n+1, adviceAmount: viewModel.adviceList.count, text: viewModel.adviceList[n].text)
+                    }
+                }
+                .padding(.bottom, 30)
+                .statusBar(hidden: true)
+                .tabViewStyle(.page(indexDisplayMode: .always))
+//                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .statusBar(hidden: true)
-            .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .frame(width: UIScreen.main.bounds.width, height:  180)
+        .frame(width: UIScreen.main.bounds.width, height:  230)
 //        .tabViewStyle(.page)
+        .ignoresSafeArea()
         .onAppear() {
-            UIPageControl.appearance().pageIndicatorTintColor = .black.withAlphaComponent(0.3)
+            UIPageControl.appearance().pageIndicatorTintColor = .black.withAlphaComponent(0.2)
             UIPageControl.appearance().currentPageIndicatorTintColor = .black
         }
+//        .background(Color.sosietyPaper)
 //        .indexViewStyle(.page(backgroundDisplayMode: .never))
     }
 }
 
 struct AdviceItemView: View {
-    var adviceTitle = "Try not to sign any papers"
-    var adviceText = "1/12\n\nIf you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
+    var number = 1
+    var adviceAmount = 12
+    var title = "Try not to sign any papers"
+    var text = "If you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 1) {
 //                Text(adviceTitle)
 //                    .font(.system(size: 26, weight: .bold))
 //                    .foregroundColor(.black)
 //                    .padding(.bottom, 14)
-                Text(adviceText)
+                Text("\(number)/\(adviceAmount)")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
+                    .padding(.top, 20)
+                Text(text)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 20)
+                Spacer()
                 
             }
             .padding(.horizontal, 30)
