@@ -8,26 +8,45 @@
 import SwiftUI
 
 struct ContactsListView: View {
-    var contactsList: [Contact] = [Contact(), Contact(), Contact()]
+    @EnvironmentObject var contactsViewModel: ContactsViewModel
+    var contactsList: [ContactInfo] = [ContactInfo(), ContactInfo(), ContactInfo()]
     var body: some View {
         List() {
-            ForEach(contactsList) { contact in
+            ForEach(contactsViewModel.allContacts) { contact in
                 ContactsListItemView(contact: contact)
+                    .onTapGesture {
+                        
+                        if let index = contactsViewModel.addedContacts.firstIndex(of: contact) {
+                            contactsViewModel.addedContacts.remove(at: index)
+                        } else {
+                            contactsViewModel.addedContacts.append(contact)
+                        }
+                    }
             }
+        }
+        .onAppear {
+            contactsViewModel.requestAccess()
         }
     }
 }
 
 struct ContactsListItemView: View {
-    var contact: Contact
+    var contact: ContactInfo
+    @EnvironmentObject var contactsViewModel: ContactsViewModel
     var body: some View {
         HStack {
-            Text("\(contact.name) \(contact.surname)")
+            Text("\(contact.firstName) \(contact.lastName) ")
                 .font(.system(size: 16, weight: .medium))
             Spacer()
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.black)
+            if (contactsViewModel.addedContacts.filter({$0 == contact}).first != nil) {
+                Image(systemName:"checkmark.circle.fill")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.black)
+            } else {
+                Image(systemName:"checkmark.circle")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.black)
+            }
         }
     }
 }

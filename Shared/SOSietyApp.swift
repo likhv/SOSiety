@@ -14,6 +14,8 @@ struct SOSietyApp: App {
             MainScreenView()
                 .environmentObject(ViewModel())
                 .environmentObject(InformationScreenViewModel())
+                .environmentObject(ContactsViewModel())
+            
         }
     }
 }

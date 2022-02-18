@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @State private var isPresented = false
     var body: some View {
         VStack {
             HStack {
                 Text ("Emergency contact").font(.title3).bold()
                 Spacer()
                 Button ("+") {
-                    
+                    isPresented.toggle()
                 }
+                .fullScreenCover(isPresented: $isPresented, content: ContactsListView.init)
             }
             List {
             }

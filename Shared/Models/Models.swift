@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Contacts
 
 struct InformationScreen: Identifiable {
     let id = UUID()
@@ -21,10 +22,10 @@ struct Advice: Identifiable {
     var text = "If you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
 }
 
-struct Contact: Identifiable {
+struct ContactInfo: Identifiable, Equatable {
     var id = UUID()
-    var name = "Natalie"
-    var surname = "Portman"
-    var phoneNumber = 89164477148
+    var firstName = "Natalie"
+    var lastName = "Portman"
+    var phoneNumber: CNPhoneNumber?
     var image = Image("portman")
 }
