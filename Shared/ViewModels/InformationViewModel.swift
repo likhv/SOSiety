@@ -8,12 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct InformationScreen: Identifiable {
-    let id = UUID()
-    let icon: String
-    let heading: String
-    let description: String
-}
+
 
 class InformationScreenViewModel: ObservableObject {
     @Published var informationScreens: [InformationScreen] = [
