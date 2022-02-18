@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+
+class ContactsViewModel: ObservableObject {
+    @Published addedContacts: [Contact] = []
+    
+}

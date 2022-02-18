@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct InformationScreen: Identifiable {
     let id = UUID()
@@ -25,4 +26,5 @@ struct Contact: Identifiable {
     var name = "Natalie"
     var surname = "Portman"
     var phoneNumber = 89164477148
+    var image = Image("")
 }
