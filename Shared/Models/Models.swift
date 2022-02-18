@@ -26,6 +26,6 @@ struct ContactInfo: Identifiable, Equatable {
     var id = UUID()
     var firstName = "Natalie"
     var lastName = "Portman"
-    var phoneNumber: CNPhoneNumber?
+    var phoneNumber: CNPhoneNumber
     var image = Image("portman")
 }

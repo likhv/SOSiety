@@ -9,50 +9,86 @@ import SwiftUI
 
 struct ContactsListView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
-    var contactsList: [ContactInfo] = [ContactInfo(), ContactInfo(), ContactInfo()]
+//    var contactsList: [ContactInfo] = [ContactInfo(), ContactInfo(), ContactInfo()]
+    @Binding var isPresented: Bool
+    @State var searchText = ""
     var body: some View {
-        List() {
-            ForEach(contactsViewModel.allContacts) { contact in
-                ContactsListItemView(contact: contact)
-                    .onTapGesture {
-                        
-                        if let index = contactsViewModel.addedContacts.firstIndex(of: contact) {
-                            contactsViewModel.addedContacts.remove(at: index)
-                        } else {
-                            contactsViewModel.addedContacts.append(contact)
-                        }
+        NavigationView {
+            ZStack {
+                List() {
+                    ForEach(searchResults) { contact in
+                        ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact)
+                            .onTapGesture {
+                                if let index = contactsViewModel.addedContacts.firstIndex(of: contact) {
+                                    contactsViewModel.addedContacts.remove(at: index)
+                                } else {
+                                    contactsViewModel.addedContacts.append(contact)
+                                }
+                            }
                     }
+                }
+                .searchable(text: $searchText)
+                .listStyle(.inset)
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+    //                ToolbarItem(placement: .navigationBarLeading) {
+    //                    Button {} label: {
+    //                        Text("Cancel")
+    //                            .foregroundColor(.black)
+    //                    }
+    //                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { isPresented = false } label: {
+                        Text("Save")
+                            .foregroundColor(.black)
+                    }
+                }
+            }
+            .onAppear {
+                contactsViewModel.requestAccess()
+            }
+
         }
-        .onAppear {
-            contactsViewModel.requestAccess()
+
+    }
+    var searchResults: [ContactInfo] {
+        if searchText.isEmpty {
+            return contactsViewModel.allContacts
+        } else {
+            return contactsViewModel.allContacts.filter { $0.firstName.contains(searchText) || $0.lastName.contains(searchText)}
         }
     }
 }
 
 struct ContactsListItemView: View {
+    var addedContacts: [ContactInfo]
     var contact: ContactInfo
-    @EnvironmentObject var contactsViewModel: ContactsViewModel
     var body: some View {
-        HStack {
-            Text("\(contact.firstName) \(contact.lastName) ")
-                .font(.system(size: 16, weight: .medium))
-            Spacer()
-            if (contactsViewModel.addedContacts.filter({$0 == contact}).first != nil) {
-                Image(systemName:"checkmark.circle.fill")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.black)
-            } else {
-                Image(systemName:"checkmark.circle")
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.black)
+        ZStack {
+            Color.white
+            HStack {
+                Text("\(contact.firstName) \(contact.lastName) ")
+                    .font(.system(size: 16, weight: .medium))
+                Spacer()
+                if (addedContacts.contains(contact)) {
+                    Image(systemName:"checkmark.circle.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color.sosietyGreen)
+                }
+                //            else {
+                //                Image(systemName:"checkmark.circle")
+                //                    .font(.system(size: 16, weight: .bold))
+                //                    .foregroundColor(.black)
+                //            }
             }
+            .padding(.vertical, 3)
         }
     }
 }
 
-struct ContactsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContactsListView()
-    }
-}
+//struct ContactsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContactsListView()
+//    }
+//}

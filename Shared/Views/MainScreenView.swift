@@ -470,5 +470,6 @@ struct ContentView_Previews: PreviewProvider {
         MainScreenView()
             .environmentObject(ViewModel())
             .environmentObject(InformationScreenViewModel())
+            .environmentObject(ContactsViewModel())
     }
 }
