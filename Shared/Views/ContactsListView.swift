@@ -16,18 +16,19 @@ struct ContactsListView: View {
         NavigationView {
             ZStack {
                 List() {
-                    ForEach(searchResults) { contact in
-                        ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact)
+                    ForEach(searchResults, id: \.id) { contact in
+                        ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains(contact))
                             .onTapGesture {
-                                if let index = contactsViewModel.addedContacts.firstIndex(of: contact) {
-                                    contactsViewModel.addedContacts.remove(at: index)
+                                if contactsViewModel.addedContacts.contains(contact) {
+                                    let index = contactsViewModel.addedContacts.firstIndex(of: contact)
+                                    contactsViewModel.addedContacts.remove(at: index!)
                                 } else {
                                     contactsViewModel.addedContacts.append(contact)
                                 }
                             }
                     }
                 }
-                .searchable(text: $searchText)
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .listStyle(.inset)
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -64,6 +65,7 @@ struct ContactsListView: View {
 struct ContactsListItemView: View {
     var addedContacts: [ContactInfo]
     var contact: ContactInfo
+    var isAdded: Bool
     var body: some View {
         ZStack {
             Color.white
@@ -71,7 +73,7 @@ struct ContactsListItemView: View {
                 Text("\(contact.firstName) \(contact.lastName) ")
                     .font(.system(size: 16, weight: .medium))
                 Spacer()
-                if (addedContacts.contains(contact)) {
+                if isAdded {
                     Image(systemName:"checkmark.circle.fill")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(Color.sosietyGreen)
@@ -84,6 +86,9 @@ struct ContactsListItemView: View {
             }
             .padding(.vertical, 3)
         }
+//        .onAppear() {
+//            isAdded = addedContacts.contains(contact)
+//        }
     }
 }
 

@@ -28,7 +28,7 @@ struct SettingsView: View {
             AddedContactsListView()
         }
         .navigationTitle("Settings")
-        .fullScreenCover(isPresented: $isPresented) {
+        .sheet(isPresented: $isPresented) {
             ContactsListView(isPresented: $isPresented)
         }
     }
@@ -42,8 +42,12 @@ struct AddedContactsListView: View {
             ForEach(contactsViewModel.addedContacts) { contact in
                 SettingsContactsListItemView(contact: contact)
             }
+            .onDelete(perform: delete)
         }
         .listStyle(.insetGrouped)
+    }
+    func delete(at offsets: IndexSet) {
+        contactsViewModel.addedContacts.remove(atOffsets: offsets)
     }
 }
 
@@ -65,8 +69,13 @@ struct SettingsContactsListItemView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text("\(contact.firstName) \(contact.lastName) ")
                     .font(.system(size: 18, weight: .semibold))
-                Text("\(contact.phoneNumber.stringValue)")
-                    .font(.system(size: 15, weight: .regular))
+                if contact.phoneNumber != nil {
+                    Text("\(contact.phoneNumber!.stringValue)")
+                        .font(.system(size: 15, weight: .regular))
+                } else {
+                    Text("No phone number")
+                        .font(.system(size: 15, weight: .regular))
+                }
             }
         }
         .padding(.vertical, 6)
