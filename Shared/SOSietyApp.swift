@@ -13,6 +13,7 @@ struct SOSietyApp: App {
         WindowGroup {
             MainScreenView()
                 .environmentObject(ViewModel())
+                .environmentObject(InformationScreenViewModel())
         }
     }
 }

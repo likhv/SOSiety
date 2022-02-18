@@ -21,6 +21,8 @@
 		7ABEBD9927B17CED00CE7C0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABEBD8627B17CED00CE7C0A /* Assets.xcassets */; };
 		7ABFD8A427B2FC3E00085FF9 /* SOSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */; };
 		7ABFD8A527B2FC3E00085FF9 /* SOSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */; };
+		8E479BDF27BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */; };
+		8E479BE027BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,7 @@
 		7ABEBD9127B17CED00CE7C0A /* SOSiety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SOSiety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ABEBD9327B17CED00CE7C0A /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSViewModel.swift; sourceTree = "<group>"; };
+		8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				7ABFD8A327B2FC3E00085FF9 /* SOSViewModel.swift */,
+				8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -214,6 +218,7 @@
 				7A4FF52B27BAB921007A2849 /* SettingsView.swift in Sources */,
 				7ABEBD9427B17CED00CE7C0A /* SOSietyApp.swift in Sources */,
 				7ABFD8A427B2FC3E00085FF9 /* SOSViewModel.swift in Sources */,
+				8E479BDF27BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +232,7 @@
 				7A4FF52C27BAB921007A2849 /* SettingsView.swift in Sources */,
 				7ABEBD9527B17CED00CE7C0A /* SOSietyApp.swift in Sources */,
 				7ABFD8A527B2FC3E00085FF9 /* SOSViewModel.swift in Sources */,
+				8E479BE027BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
