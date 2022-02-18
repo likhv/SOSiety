@@ -17,12 +17,14 @@ struct InformationView: View {
             Color.sosietyPaper.ignoresSafeArea()
             TabView {
                 ForEach(informationScreenViewModel.informationScreens, id:\.id) {informationScreen in
-                    VStack (alignment: .leading) {
-                        Image(systemName: informationScreen.icon).font(.system(size: 80, weight: .bold))
+                    VStack (alignment: .leading, spacing: 20) {
+                        Image(systemName: informationScreen.icon)
+                            .font(.system(size: 80, weight: .bold))
                         Text(informationScreen.heading).font(.largeTitle).fontWeight(.bold)
+                           
                         Text(informationScreen.description).font(.title3)
                     }
-                    .padding()
+                    .padding(50)
                 }
             }
             Button {isInfoPresenting = false} label: {

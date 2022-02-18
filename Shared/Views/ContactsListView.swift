@@ -16,7 +16,7 @@ struct ContactsListView: View {
         NavigationView {
             ZStack {
                 List() {
-                    ForEach(searchResults.filter { $0.firstName != "" && $0.lastName != "" } ) { contact in
+                    ForEach(searchResults.filter { $0.firstName != "" || $0.lastName != "" } ) { contact in
                         Button {
                             if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
                                 contactsViewModel.addedContacts.remove(at: index)

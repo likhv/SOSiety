@@ -59,8 +59,6 @@ struct MainScreenView: View {
                     }
                 }
                 .offset(y: tumblerOffset/1.55)
-//                .offset(y: (UIScreen.main.bounds.height/1.85 + tumblerOffset) * 1.5)
-
             }
             .gesture(swipeUp)
             .navigationBarTitleDisplayMode(.inline)
@@ -85,14 +83,6 @@ struct MainScreenView: View {
                     })
                }
             }
-//            .navigationBarItems(
-//                leading:
-//                    Button {isInfoPresenting = true} label: {
-//                        Image(systemName: "info.circle")},
-//                trailing:
-//                    NavigationLink(destination: SettingsView(), label: {
-//                        Image(systemName: "gearshape")
-//                    }))
             .accentColor(.black)
             .fullScreenCover(isPresented: $isInfoPresenting) {
                 InformationView(isInfoPresenting: $isInfoPresenting)
@@ -167,18 +157,14 @@ struct AdviceTabView: View {
                 .padding(.bottom, 30)
                 .statusBar(hidden: true)
                 .tabViewStyle(.page(indexDisplayMode: .always))
-//                .tabViewStyle(.page(indexDisplayMode: .never))
             }
         }
         .frame(width: UIScreen.main.bounds.width, height:  230)
-//        .tabViewStyle(.page)
         .ignoresSafeArea()
         .onAppear() {
             UIPageControl.appearance().pageIndicatorTintColor = .black.withAlphaComponent(0.2)
             UIPageControl.appearance().currentPageIndicatorTintColor = .black
         }
-//        .background(Color.sosietyPaper)
-//        .indexViewStyle(.page(backgroundDisplayMode: .never))
     }
 }
 
@@ -208,7 +194,7 @@ struct AdviceItemView: View {
                 
             }
             .padding(.horizontal, 30)
-//            Spacer()
+            Spacer()
         }
         
     }
@@ -241,16 +227,6 @@ struct AdviceItemViewOld: View {
                         Spacer()
                     }
                 )
-//            Spacer()
-//            Button { viewModel.openFAQ() } label: {
-//                VStack {
-//                    Text("What's next")
-//                        .font(.system(size: 18, weight: .semibold))
-//                        .padding(.bottom, 5)
-//                    Image(systemName: "chevron.down")
-//                        .font(.system(size: 18, weight: .semibold))
-//                }
-//            }
         }
     }
 }
