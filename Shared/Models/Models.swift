@@ -24,6 +24,7 @@ struct Advice: Identifiable {
 
 struct ContactInfo: Identifiable, Equatable {
     var id = UUID()
+    var identifier = ""
     var firstName = "Natalie"
     var lastName = "Portman"
     var phoneNumber: CNPhoneNumber?

@@ -21,7 +21,7 @@ struct MainScreenView: View {
                 if viewModel.isSOS {
                     Color.sosietyRed.ignoresSafeArea()
                 } else {
-                    Color.sosietyPaper.ignoresSafeArea()
+                    Color.white.ignoresSafeArea()
                 }
                 if viewModel.isSOS {
                     WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))

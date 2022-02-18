@@ -16,16 +16,17 @@ struct ContactsListView: View {
         NavigationView {
             ZStack {
                 List() {
-                    ForEach(searchResults, id: \.id) { contact in
-                        ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains(contact))
-                            .onTapGesture {
-                                if contactsViewModel.addedContacts.contains(contact) {
-                                    let index = contactsViewModel.addedContacts.firstIndex(of: contact)
-                                    contactsViewModel.addedContacts.remove(at: index!)
-                                } else {
-                                    contactsViewModel.addedContacts.append(contact)
-                                }
+                    ForEach(searchResults.filter { $0.firstName != "" && $0.lastName != "" } ) { contact in
+                        Button {
+                            if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+                                contactsViewModel.addedContacts.remove(at: index)
+                            } else {
+                                contactsViewModel.addedContacts.append(contact)
                             }
+                        } label: {
+                            ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier})
+              
+                        }
                     }
                 }
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
@@ -67,25 +68,21 @@ struct ContactsListItemView: View {
     var contact: ContactInfo
     var isAdded: Bool
     var body: some View {
-        ZStack {
-            Color.white
             HStack {
                 Text("\(contact.firstName) \(contact.lastName) ")
                     .font(.system(size: 16, weight: .medium))
                 Spacer()
-                if isAdded {
-                    Image(systemName:"checkmark.circle.fill")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(Color.sosietyGreen)
-                }
+                Image(systemName:"checkmark.circle.fill")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color.sosietyGreen)
+                    .opacity(isAdded ? 1 : 0)
                 //            else {
                 //                Image(systemName:"checkmark.circle")
                 //                    .font(.system(size: 16, weight: .bold))
                 //                    .foregroundColor(.black)
                 //            }
             }
-            .padding(.vertical, 3)
-        }
+            .padding(.vertical, 6)
 //        .onAppear() {
 //            isAdded = addedContacts.contains(contact)
 //        }
