@@ -19,11 +19,11 @@ class ViewModel: ObservableObject {
     @Published var history: [String] = []
     @Published var statusConsole: [String] = []
     @Published var adviceList: [Advice] = [
-        Advice(),
-        Advice(),
-        Advice(),
-        Advice(),
-        Advice()
+        Advice(text: "Stay calm and confident, don't resist or panic"),
+        Advice(text: "Inform trusted contacts about your arrest, location and ask them to find a lawyer for you in case you don't have one"),
+        Advice(text: "Don't be provoked, respond to questions or sign anything suspicious, especially plain papers"),
+        Advice(text: "Try to fix facts related to your arrest - names and titles of policemen, their peculiarities, declared reason for arrest"),
+        Advice(text: "Ask those who witnessed your arrest to share their contacts")
     ]
         
     func startCheckIn() {
