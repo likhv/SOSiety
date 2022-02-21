@@ -8,27 +8,36 @@
 import SwiftUI
 
 struct LoopedWaveAnimationView: View {
-    @State var firstCircleWidthheight = 0.0
-    @State var secondCircleWidthheight = 0.0
-    @State var thirdCircleWidthheight = 0.0
     var center = CGPoint.zero
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
-            Circle()
-                .stroke(style: StrokeStyle(lineWidth: 1))
-                .frame(width: firstCircleWidthheight, height: firstCircleWidthheight, alignment: .center)
-                .foregroundColor(.white.opacity(0.75))
-                .position(center)
-                .opacity(1.0-(firstCircleWidthheight/1500))
-                .onAppear() {
-                    withAnimation(.linear(duration: 5).repeatForever(autoreverses: false)) {
-                        firstCircleWidthheight = 1500
-                    }
-                }
+//            Color.black.ignoresSafeArea()
+            loopedWave(delay: 0.2, center: center)
+            loopedWave(delay: 2.2, center: center)
+            loopedWave(delay: 4.2, center: center)
+            loopedWave(delay: 6.2, center: center)
         }
-        .ignoresSafeArea()
+//        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//        .ignoresSafeArea()
+    }
+}
 
+struct loopedWave: View {
+    @State var firstCircleWidthheight = 0.0
+    var delay = 0.0
+    var center: CGPoint
+    var body: some View {
+        Circle()
+            .stroke(style: StrokeStyle(lineWidth: 1))
+            .frame(width: firstCircleWidthheight, height: firstCircleWidthheight, alignment: .center)
+            .foregroundColor(.white.opacity(1))
+            .position(center)
+            .opacity(1.0-(firstCircleWidthheight/1000))
+            .onAppear() {
+                withAnimation(.linear(duration: 8).repeatForever(autoreverses: false).delay(delay)) {
+                    firstCircleWidthheight = 1500
+                }
+            }
     }
 }
 

@@ -11,8 +11,8 @@ import SwiftUI
 struct SOSietyApp: App {
     var body: some Scene {
         WindowGroup {
-            LoopedWaveAnimationView()
-//            MainScreenView()
+//            LoopedWaveAnimationView()
+            MainScreenView()
                 .preferredColorScheme(.light)
 //            SettingsView()
                 .environmentObject(ViewModel())

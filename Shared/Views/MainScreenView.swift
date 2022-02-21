@@ -23,11 +23,24 @@ struct MainScreenView: View {
                 } else {
                     Color.white.ignoresSafeArea()
                 }
-                if viewModel.isSOS {
-                    WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
-                        .offset(y: tumblerOffset)
+                if viewModel.isSOS && !isFAQOpened {
+                    LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
+//                        .position(x: 0, y: 0)
+//                        .offset(y: tumblerOffset)
                         .ignoresSafeArea()
+
+                } else if viewModel.isSOS {
+                    LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0+tumblerOffset))
+//                        .position(x: 0, y: 0)
+//                        .offset(y: tumblerOffset)
+                        .ignoresSafeArea()
+                    
                 }
+//                if viewModel.isSOS {
+//                    WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
+//                        .offset(y: tumblerOffset)
+//                        .ignoresSafeArea()
+//                }
                 StatusConsole()
                     .offset(y: 80+tumblerOffset)
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
