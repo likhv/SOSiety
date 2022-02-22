@@ -19,7 +19,9 @@ class ContactsViewModel: ObservableObject {
             let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
             do {
                 try CNContactStore().enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
-                    contacts.append(ContactInfo(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, phoneNumber: contact.phoneNumbers.first?.value))
+                    if contact.phoneNumbers.first != nil {
+                        contacts.append(ContactInfo(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, phoneNumber: contact.phoneNumbers.first?.value))
+                    }
                 })
             } catch let error {
                 print("Failed", error)

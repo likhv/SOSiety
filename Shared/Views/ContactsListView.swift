@@ -22,7 +22,6 @@ struct ContactsListView: View {
                                 contactsViewModel.addedContacts.remove(at: index)
                             } else {
                                 contactsViewModel.addedContacts.append(contact)
-                                searchText = ""
                             }
                         } label: {
                             ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier})

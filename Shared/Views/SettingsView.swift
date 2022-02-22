@@ -30,7 +30,7 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
 //        .navigationBackButton(color: .black, text: "Back")
-        .sheet(isPresented: $isPresented) {
+        .fullScreenCover(isPresented: $isPresented) {
             ContactsListView(isPresented: $isPresented)
         }
     }
@@ -45,7 +45,6 @@ struct AddedContactsListView: View {
             List() {
                 ForEach($contactsViewModel.addedContacts) { contact in
                     SettingsContactsListItemView(contact: contact)
-                        .padding(.vertical, 2)
                 }
                 .onDelete(perform: delete)
             }
