@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		698E133A684E906725448D48 /* Pods_SOSiety__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BBBD2D45516AFBDBCA9123 /* Pods_SOSiety__macOS_.framework */; };
 		7A4FF52B27BAB921007A2849 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FF52A27BAB921007A2849 /* SettingsView.swift */; };
 		7A4FF52C27BAB921007A2849 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FF52A27BAB921007A2849 /* SettingsView.swift */; };
 		7A8B647C27BAC0CB008A6D95 /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8B647B27BAC0CB008A6D95 /* InformationView.swift */; };
@@ -31,9 +32,12 @@
 		7ACD790027C3E898002F334D /* BackgroundAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD78FE27C3E898002F334D /* BackgroundAnimationView.swift */; };
 		8E479BDF27BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */; };
 		8E479BE027BFD4DD00DBA5DF /* InformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */; };
+		F4D6B7EACC075DF7320B6237 /* Pods_SOSiety__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EAAA3D452A803857F3147B /* Pods_SOSiety__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3229BF2F28859A21305E74B2 /* Pods-SOSiety (macOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOSiety (macOS).debug.xcconfig"; path = "Target Support Files/Pods-SOSiety (macOS)/Pods-SOSiety (macOS).debug.xcconfig"; sourceTree = "<group>"; };
+		3EFF9D62745B9F78C158FC3F /* Pods-SOSiety (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOSiety (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SOSiety (iOS)/Pods-SOSiety (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		7A4FF52A27BAB921007A2849 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7A8B647B27BAC0CB008A6D95 /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
 		7A8B648027BAC170008A6D95 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -48,6 +52,10 @@
 		7ACD78F527C01377002F334D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7ACD78FE27C3E898002F334D /* BackgroundAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAnimationView.swift; sourceTree = "<group>"; };
 		8E479BDE27BFD4DD00DBA5DF /* InformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationViewModel.swift; sourceTree = "<group>"; };
+		9C80116F878EE929331CE744 /* Pods-SOSiety (macOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOSiety (macOS).release.xcconfig"; path = "Target Support Files/Pods-SOSiety (macOS)/Pods-SOSiety (macOS).release.xcconfig"; sourceTree = "<group>"; };
+		A8BBBD2D45516AFBDBCA9123 /* Pods_SOSiety__macOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SOSiety__macOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACC88EA62F19D2C3A896289A /* Pods-SOSiety (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOSiety (iOS).release.xcconfig"; path = "Target Support Files/Pods-SOSiety (iOS)/Pods-SOSiety (iOS).release.xcconfig"; sourceTree = "<group>"; };
+		D0EAAA3D452A803857F3147B /* Pods_SOSiety__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SOSiety__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4D6B7EACC075DF7320B6237 /* Pods_SOSiety__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,12 +71,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				698E133A684E906725448D48 /* Pods_SOSiety__macOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		097457EF9D7C132B36538902 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3EFF9D62745B9F78C158FC3F /* Pods-SOSiety (iOS).debug.xcconfig */,
+				ACC88EA62F19D2C3A896289A /* Pods-SOSiety (iOS).release.xcconfig */,
+				3229BF2F28859A21305E74B2 /* Pods-SOSiety (macOS).debug.xcconfig */,
+				9C80116F878EE929331CE744 /* Pods-SOSiety (macOS).release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		254EA47A58D3EBBC464113FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0EAAA3D452A803857F3147B /* Pods_SOSiety__iOS_.framework */,
+				A8BBBD2D45516AFBDBCA9123 /* Pods_SOSiety__macOS_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7A8B647E27BAC10B008A6D95 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +134,8 @@
 			children = (
 				7ABEBD8327B17CEB00CE7C0A /* Shared */,
 				7ABEBD8C27B17CED00CE7C0A /* Products */,
+				097457EF9D7C132B36538902 /* Pods */,
+				254EA47A58D3EBBC464113FF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -135,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7ABEBD9C27B17CED00CE7C0A /* Build configuration list for PBXNativeTarget "SOSiety (iOS)" */;
 			buildPhases = (
+				DE10878B36F977082F696BF3 /* [CP] Check Pods Manifest.lock */,
 				7ABEBD8727B17CED00CE7C0A /* Sources */,
 				7ABEBD8827B17CED00CE7C0A /* Frameworks */,
 				7ABEBD8927B17CED00CE7C0A /* Resources */,
+				13F0747A419A4C2F671E3230 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +187,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7ABEBD9F27B17CED00CE7C0A /* Build configuration list for PBXNativeTarget "SOSiety (macOS)" */;
 			buildPhases = (
+				592F2C9F28EBEB9FE64325D7 /* [CP] Check Pods Manifest.lock */,
 				7ABEBD8D27B17CED00CE7C0A /* Sources */,
 				7ABEBD8E27B17CED00CE7C0A /* Frameworks */,
 				7ABEBD8F27B17CED00CE7C0A /* Resources */,
@@ -220,6 +256,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13F0747A419A4C2F671E3230 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SOSiety (iOS)/Pods-SOSiety (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SOSiety (iOS)/Pods-SOSiety (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOSiety (iOS)/Pods-SOSiety (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		592F2C9F28EBEB9FE64325D7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SOSiety (macOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE10878B36F977082F696BF3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SOSiety (iOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7ABEBD8727B17CED00CE7C0A /* Sources */ = {
@@ -374,6 +474,7 @@
 		};
 		7ABEBD9D27B17CED00CE7C0A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3EFF9D62745B9F78C158FC3F /* Pods-SOSiety (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -406,6 +507,7 @@
 		};
 		7ABEBD9E27B17CED00CE7C0A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACC88EA62F19D2C3A896289A /* Pods-SOSiety (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -439,6 +541,7 @@
 		};
 		7ABEBDA027B17CED00CE7C0A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3229BF2F28859A21305E74B2 /* Pods-SOSiety (macOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -468,6 +571,7 @@
 		};
 		7ABEBDA127B17CED00CE7C0A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9C80116F878EE929331CE744 /* Pods-SOSiety (macOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

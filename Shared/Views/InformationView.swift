@@ -18,13 +18,19 @@ struct InformationView: View {
             TabView {
                 ForEach(informationScreenViewModel.informationScreens, id:\.id) {informationScreen in
                     VStack (alignment: .leading, spacing: 20) {
-                        Image(systemName: informationScreen.icon)
-                            .font(.system(size: 80, weight: .bold))
+                        Image(informationScreen.icon)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 50)
+                            
                         Text(informationScreen.heading).font(.largeTitle).fontWeight(.bold)
+                            .padding(.horizontal, 30)
                            
                         Text(informationScreen.description).font(.title3)
+                            .padding(.horizontal, 30)
                     }
-                    .padding(50)
+                    
                 }
             }
             Button {isInfoPresenting = false} label: {

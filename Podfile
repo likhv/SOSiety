@@ -7,6 +7,7 @@ target 'SOSiety (iOS)' do
 
   # Pods for SOSiety (iOS)
   pod 'Alamofire', '~> 5.5'
+  pod 'TwilioVoice', '~> 6.3.0'
 
 end
 
