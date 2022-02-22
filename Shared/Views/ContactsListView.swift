@@ -22,6 +22,7 @@ struct ContactsListView: View {
                                 contactsViewModel.addedContacts.remove(at: index)
                             } else {
                                 contactsViewModel.addedContacts.append(contact)
+                                searchText = ""
                             }
                         } label: {
                             ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier})
@@ -43,6 +44,7 @@ struct ContactsListView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button { isPresented = false } label: {
                         Text("Save")
+                            .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.black)
                     }
                 }

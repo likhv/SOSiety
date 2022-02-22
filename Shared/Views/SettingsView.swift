@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var contactsViewModel: ContactsViewModel
     @State private var isPresented = false
     var body: some View {
         VStack {
@@ -25,9 +26,10 @@ struct SettingsView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            AddedContactsListView()
+            AddedContactsListView(isPresented: $isPresented)
         }
         .navigationTitle("Settings")
+//        .navigationBackButton(color: .black, text: "Back")
         .sheet(isPresented: $isPresented) {
             ContactsListView(isPresented: $isPresented)
         }
@@ -37,14 +39,39 @@ struct SettingsView: View {
 struct AddedContactsListView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
     @State var searchText = ""
+    @Binding var isPresented: Bool
     var body: some View {
-        List() {
-            ForEach(contactsViewModel.addedContacts) { contact in
-                SettingsContactsListItemView(contact: contact)
+        ZStack {
+            List() {
+                ForEach($contactsViewModel.addedContacts) { contact in
+                    SettingsContactsListItemView(contact: contact)
+                        .padding(.vertical, 2)
+                }
+                .onDelete(perform: delete)
             }
-            .onDelete(perform: delete)
+            .listStyle(.insetGrouped)
+            if contactsViewModel.addedContacts.count == 0 {
+                Button {isPresented = true} label: {
+                    VStack (alignment: .center, spacing: 2) {
+                        Image(systemName: "person.badge.plus")
+                            .font(.system(size: 60, weight: .bold))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                            .padding(10)
+                        Text("No contacts yet")
+                            .font(.system(size: 26, weight: .bold))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                        Text("Tap to add at least one person")
+                            .font(.system(size: 18, weight: .medium))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.bottom, 50)
+                }
+                .padding(.horizontal, 45)
+            }
         }
-        .listStyle(.insetGrouped)
     }
     func delete(at offsets: IndexSet) {
         contactsViewModel.addedContacts.remove(atOffsets: offsets)
@@ -52,23 +79,28 @@ struct AddedContactsListView: View {
 }
 
 struct SettingsContactsListItemView: View {
-    var contact: ContactInfo
+    @Binding var contact: ContactInfo
     var body: some View {
         HStack(spacing: 10) {
-            contact.image
-                .resizable()
-                .frame(width: 50, height: 50, alignment: .center)
-                .scaledToFit()
-                .mask(Circle())
+//            contact.image
+//                .resizable()
+//                .frame(width: 50, height: 50, alignment: .center)
+//                .scaledToFit()
+//                .mask(Circle())
 //            Circle()
 //                .frame(width: 40, height: 40, alignment: .center)
 //                .overlay(
 //                    contact.image
 //
 //                    )
-            VStack(alignment: .leading, spacing: 0) {
-                Text("\(contact.firstName) \(contact.lastName) ")
-                    .font(.system(size: 18, weight: .semibold))
+            VStack(alignment: .leading, spacing: 5) {
+                if contact.firstName == "" {
+                    Text("\(contact.lastName)")
+                        .font(.system(size: 18, weight: .semibold))
+                } else {
+                    Text("\(contact.firstName)\(contact.lastName)")
+                        .font(.system(size: 18, weight: .semibold))
+                }
                 if contact.phoneNumber != nil {
                     Text("\(contact.phoneNumber!.stringValue)")
                         .font(.system(size: 15, weight: .regular))
@@ -76,6 +108,13 @@ struct SettingsContactsListItemView: View {
                     Text("No phone number")
                         .font(.system(size: 15, weight: .regular))
                 }
+                HStack {
+                    Text("Share location")
+                        .font(.system(size: 15, weight: .regular))
+                        .padding(.top, 5)
+                    Toggle("", isOn: $contact.isLocationShared)
+                }
+                    
             }
         }
         .padding(.vertical, 6)

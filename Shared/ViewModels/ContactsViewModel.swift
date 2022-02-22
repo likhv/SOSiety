@@ -7,6 +7,7 @@
 
 import Foundation
 import Contacts
+import SwiftUI
 
 class ContactsViewModel: ObservableObject {
     @Published var addedContacts: [ContactInfo] = []
@@ -14,7 +15,7 @@ class ContactsViewModel: ObservableObject {
     
     func fetchingContacts(){
             var contacts = [ContactInfo]()
-            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
+            let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey]
             let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
             do {
                 try CNContactStore().enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in

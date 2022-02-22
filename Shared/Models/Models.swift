@@ -28,5 +28,6 @@ struct ContactInfo: Identifiable, Equatable {
     var firstName = "Natalie"
     var lastName = "Portman"
     var phoneNumber: CNPhoneNumber?
+    var isLocationShared: Bool = false
     var image = Image("portman")
 }
