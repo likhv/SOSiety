@@ -12,10 +12,10 @@ struct LoopedWaveAnimationView: View {
     var body: some View {
         ZStack {
 //            Color.black.ignoresSafeArea()
-            loopedWave(delay: 0.2, center: center)
-            loopedWave(delay: 2.2, center: center)
-            loopedWave(delay: 4.2, center: center)
-            loopedWave(delay: 6.2, center: center)
+            loopedWave(delay: 0.5, center: center)
+            loopedWave(delay: 2.5, center: center)
+            loopedWave(delay: 4.5, center: center)
+            loopedWave(delay: 6.5, center: center)
         }
 //        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
 //        .ignoresSafeArea()

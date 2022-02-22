@@ -60,9 +60,10 @@ struct MainScreenView: View {
                                 Text(isFAQOpened ? "Close advices" : "Legal advices")
                                     .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 5)
-                                Image(systemName: isFAQOpened ? "multiply" : "")
+                                Image(systemName: "multiply")
                                     .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 4)
+                                    .opacity(isFAQOpened ? 1 : 0)
                             }
 //                            .opacity(isFAQOpened ? 0 : 1)
                             Image(systemName: "chevron.down")
@@ -144,7 +145,7 @@ struct StatusConsole: View {
         VStack {
             ForEach(viewModel.statusConsole, id: \.self) { status in
                Text(status)
-                    .font(.system(size: 16, weight: .medium))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
             }
         }
@@ -194,12 +195,12 @@ struct AdviceItemView: View {
 //                    .foregroundColor(.black)
 //                    .padding(.bottom, 14)
                 Text("\(number)/\(adviceAmount)")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
                     .padding(.top, 20)
                 Text(text)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
                     .padding(.top, 20)
