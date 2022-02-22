@@ -97,7 +97,7 @@ struct SettingsContactsListItemView: View {
                     Text("\(contact.lastName)")
                         .font(.system(size: 18, weight: .semibold))
                 } else {
-                    Text("\(contact.firstName)\(contact.lastName)")
+                    Text("\(contact.firstName) \(contact.lastName)")
                         .font(.system(size: 18, weight: .semibold))
                 }
                 if contact.phoneNumber != nil {

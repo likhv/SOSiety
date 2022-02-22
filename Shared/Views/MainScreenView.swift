@@ -25,22 +25,13 @@ struct MainScreenView: View {
                 }
                 if viewModel.isSOS && !isFAQOpened {
                     LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
-//                        .position(x: 0, y: 0)
-//                        .offset(y: tumblerOffset)
                         .ignoresSafeArea()
 
                 } else if viewModel.isSOS {
                     LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0+tumblerOffset))
-//                        .position(x: 0, y: 0)
-//                        .offset(y: tumblerOffset)
                         .ignoresSafeArea()
                     
                 }
-//                if viewModel.isSOS {
-//                    WavesAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
-//                        .offset(y: tumblerOffset)
-//                        .ignoresSafeArea()
-//                }
                 StatusConsole()
                     .offset(y: 80+tumblerOffset)
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
@@ -65,7 +56,6 @@ struct MainScreenView: View {
                                     .padding(.bottom, 4)
                                     .opacity(isFAQOpened ? 1 : 0)
                             }
-//                            .opacity(isFAQOpened ? 0 : 1)
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 18, weight: .medium))
                                 .opacity(isFAQOpened ? 0 : 1)
@@ -158,9 +148,6 @@ struct AdviceTabView: View {
 
     var body: some View {
         ZStack {
-//            Rectangle()
-//                .foregroundColor(.sosietyPaper)
-//                .opacity(0.8)
             VStack {
                 Divider()
                 TabView {
@@ -211,37 +198,6 @@ struct AdviceItemView: View {
             Spacer()
         }
         
-    }
-}
-
-struct AdviceItemViewOld: View {
-    @EnvironmentObject var viewModel: ViewModel
-    var adviceTitle = "Try not to sign any papers"
-    var adviceText = "If you aren’t sure about documents officers ask you to sign, try not to do that. It is also important with empty blanks"
-    var body: some View {
-        VStack {
-            RoundedRectangle(cornerRadius: 10, style: .circular)
-                .frame(width: UIScreen.main.bounds.width-42, height: UIScreen.main.bounds.width-42, alignment: .center)
-                .foregroundColor(.white)
-//                .shadow(color: .black, radius: 15, x: 0, y: 15)
-                .overlay(
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(adviceTitle)
-                                .font(.system(size: 26, weight: .bold))
-                                .foregroundColor(.black)
-                                .padding(.bottom, 14)
-                            Text(adviceText)
-                                .font(.system(size: 18, weight: .medium))
-                                .foregroundColor(.black)
-                            Spacer()
-                        }
-                        .padding(30)
-                        .padding(.trailing, 10)
-                        Spacer()
-                    }
-                )
-        }
     }
 }
 
@@ -329,20 +285,6 @@ struct TumblerView: View {
                         }
                     }
                     swipeDistanceDelta = .zero
-                        
-                        
-                        
-                        
-//                    if swipeDistanceDelta + swipeDistance > UIScreen.main.bounds.width - 40 - 10  {
-//                        swipeDistance = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
-//                        viewModel.startSOS()
-//                        drawHaptic.impactOccurred()
-//                    } else {
-//                        swipeDistance = .zero
-//                        viewModel.stopSOS()
-//                        drawHaptic.impactOccurred()
-//                    }
-//                    swipeDistanceDelta = .zero
                 }
             }
     }
@@ -386,21 +328,9 @@ struct WavesAnimationView: View {
                 print(circlesArray.count)
             }
         }
-//        .onAppear() {
-//            if circlesArray.count == 0 {
-//                circlesArray.append(AnimatedCircle(center:center))
-//            }
-//        }
         .onReceive(wavesTimer) { input in
             if counted % 4 == 0 {
                 circlesArray.append(AnimatedCircle(center:center))
-//                drawHaptic.impactOccurred()
-//                DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
-//                    drawHaptic.impactOccurred()
-//                }
-//                DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
-//                    drawHaptic.impactOccurred()
-//                }
             }
             counted += 1
         }
