@@ -18,18 +18,28 @@ struct InformationView: View {
             TabView {
                 ForEach(informationScreenViewModel.informationScreens, id:\.id) {informationScreen in
                     VStack (alignment: .leading, spacing: 20) {
+                        Spacer()
+                        
                         Image(informationScreen.icon)
                             .resizable()
                             .scaledToFit()
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 50)
+                            .padding(.horizontal, 40)
+//                            .padding(.bottom, 20)
                             
-                        Text(informationScreen.heading).font(.largeTitle).fontWeight(.bold)
+                        Spacer()
+                        
+                        Text(informationScreen.heading)
+                            .font(.title)
+                            .fontWeight(.bold)
                             .padding(.horizontal, 30)
                            
-                        Text(informationScreen.description).font(.title3)
+                        Text(informationScreen.description)
+                            .font(.system(size: 18, weight: .medium))
                             .padding(.horizontal, 30)
+                        
+                        Spacer()
                     }
+//                    .padding(.top, 80)
                     
                 }
             }
@@ -50,6 +60,7 @@ struct InformationView: View {
 struct InformationView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView(isInfoPresenting: true)
+            .previewDevice("iPhone 12")
             .environmentObject(ViewModel())
             .environmentObject(InformationScreenViewModel())
     }
