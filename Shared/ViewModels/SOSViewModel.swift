@@ -11,13 +11,14 @@ import Foundation
 
 
 
-class ViewModel: ObservableObject {
+class SOSViewModel: ObservableObject {
     
     @Published var isSOS: Bool = false
     @Published var isCheckIn: Bool = false
     @Published var notificationCountdown: Int = 30
     @Published var history: [String] = []
     @Published var statusConsole: [String] = []
+    @Published var userName: String = ""
     @Published var adviceList: [Advice] = [
         Advice(text: "Stay calm and confident, don't resist or panic"),
         Advice(text: "Inform trusted contacts about your arrest, location and ask them to find a lawyer for you in case you don't have one"),

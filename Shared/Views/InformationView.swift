@@ -63,7 +63,7 @@ struct InformationView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView(isInfoPresenting: true)
             .previewDevice("iPhone 12")
-            .environmentObject(ViewModel())
+            .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainScreenView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     @State var isInfoPresenting = false
     @State var isFAQOpened = false
     @State var FAQHeight = 0.0
@@ -130,7 +130,7 @@ struct MainScreenView: View {
 }
 
 struct StatusConsole: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     var body: some View {
         VStack {
             ForEach(viewModel.statusConsole, id: \.self) { status in
@@ -143,7 +143,7 @@ struct StatusConsole: View {
 }
 
 struct AdviceTabView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     @Binding var isFAQPresenting: Bool
 
     var body: some View {
@@ -202,7 +202,7 @@ struct AdviceItemView: View {
 }
 
 struct TumblerView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     @Binding var isSOS: Bool
     @Binding var isFAQOpened: Bool
     @State var swipeDistance = 0.0
@@ -388,7 +388,7 @@ struct AnimatedCircle3D: View, Identifiable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
-            .environmentObject(ViewModel())
+            .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
             .environmentObject(ContactsViewModel())
     }

@@ -125,7 +125,7 @@ struct SettingsContactsListItemView: View {
 struct ContentView_PreviewsSettings: PreviewProvider {
     static var previews: some View {
         MainScreenView()
-            .environmentObject(ViewModel())
+            .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
             .environmentObject(ContactsViewModel())
             .previewDevice("iPhone 11")

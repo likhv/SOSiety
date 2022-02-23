@@ -16,7 +16,7 @@ struct SOSietyApp: App {
             FirstStartView()
                 .preferredColorScheme(.light)
 //            SettingsView()
-                .environmentObject(ViewModel())
+                .environmentObject(SOSViewModel())
                 .environmentObject(InformationScreenViewModel())
                 .environmentObject(ContactsViewModel())
             
