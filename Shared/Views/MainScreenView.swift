@@ -10,7 +10,6 @@ import SwiftUI
 struct MainScreenView: View {
     @EnvironmentObject var viewModel: SOSViewModel
     @State var isInfoPresenting = true
-    @State var firstScreenPresented = true
     @State var isFAQOpened = false
     @State var FAQHeight = 0.0
     @State var tumblerOffset = 0.0
@@ -38,7 +37,7 @@ struct MainScreenView: View {
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
                 
-                HeaderView(isSOS: viewModel.isSOS)
+                HeaderView(headerText: viewModel.isSOS ? "SOS mode\nlaunched" : "Everything\nis ready")
                     .opacity(headerOpacity)
                     .offset(y: tumblerOffset/4)
                 AdviceTabView(isFAQPresenting: $isFAQOpened)
@@ -64,8 +63,8 @@ struct MainScreenView: View {
                     }
                 }
                 .offset(y: tumblerOffset/1.55)
-                if viewModel.isFirstStart {
-                    FirstStartView()
+                if viewModel.firstScreenPresented {
+                    FirstStartView(firstScreenPresented: $viewModel.firstScreenPresented)
                 }
             }
             .gesture(swipeUp)
@@ -298,8 +297,8 @@ struct TumblerView: View {
 }
 
 struct HeaderView: View {
-    var isSOS: Bool
-    var headerText: String {isSOS ? "SOS mode\nlaunched" : "Everything\nis ready"}
+//    var isSOS: Bool
+    var headerText: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
