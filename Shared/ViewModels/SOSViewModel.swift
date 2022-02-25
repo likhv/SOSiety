@@ -9,14 +9,20 @@ import Foundation
 import Alamofire
 import CoreLocation
 
-class ViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
-    
+
+
+
+
+class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+
     @Published var isSOS: Bool = false
     @Published var geoString: String = ""
     @Published var isCheckIn: Bool = false
     @Published var notificationCountdown: Int = 30
     @Published var history: [String] = []
     @Published var statusConsole: [String] = []
+    @Published var userName: String = ""
+    @Published var firstScreenPresented: Bool = true
     @Published var adviceList: [Advice] = [
         Advice(text: "Stay calm and confident, don't resist or panic"),
         Advice(text: "Inform trusted contacts about your arrest, location and ask them to find a lawyer for you in case you don't have one"),

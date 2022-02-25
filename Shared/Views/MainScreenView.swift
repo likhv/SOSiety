@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MainScreenView: View {
-    @EnvironmentObject var viewModel: ViewModel
-    @State var isInfoPresenting = false
+    @EnvironmentObject var viewModel: SOSViewModel
+    @State var isInfoPresenting = true
     @State var isFAQOpened = false
     @State var FAQHeight = 0.0
     @State var tumblerOffset = 0.0
@@ -37,7 +37,7 @@ struct MainScreenView: View {
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
                 
-                HeaderView(isSOS: viewModel.isSOS)
+                HeaderView(headerText: viewModel.isSOS ? "SOS mode\nlaunched" : "Everything\nis ready")
                     .opacity(headerOpacity)
                     .offset(y: tumblerOffset/4)
                 AdviceTabView(isFAQPresenting: $isFAQOpened)
@@ -63,6 +63,9 @@ struct MainScreenView: View {
                     }
                 }
                 .offset(y: tumblerOffset/1.55)
+                if viewModel.firstScreenPresented {
+                    FirstStartView(firstScreenPresented: $viewModel.firstScreenPresented)
+                }
             }
             .onAppear {
                 viewModel.checkIfLocationServicesIsEnabled()
@@ -84,7 +87,7 @@ struct MainScreenView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView(), label: {
-                        Image(systemName: "gearshape")
+                        Image(systemName: "person.crop.circle.badge.plus")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.black)
                     })
@@ -94,6 +97,9 @@ struct MainScreenView: View {
             .fullScreenCover(isPresented: $isInfoPresenting) {
                 InformationView(isInfoPresenting: $isInfoPresenting)
             }
+//            .fullScreenCover(isPresented: $firstScreenPresented) {
+//                FirstStartView(firstScreenPresented: $firstScreenPresented)
+//            }
         }
     }
     var swipeUp: some Gesture {
@@ -133,7 +139,7 @@ struct MainScreenView: View {
 }
 
 struct StatusConsole: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     var body: some View {
         VStack {
             ForEach(viewModel.statusConsole, id: \.self) { status in
@@ -146,7 +152,7 @@ struct StatusConsole: View {
 }
 
 struct AdviceTabView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     @Binding var isFAQPresenting: Bool
 
     var body: some View {
@@ -205,7 +211,7 @@ struct AdviceItemView: View {
 }
 
 struct TumblerView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @EnvironmentObject var viewModel: SOSViewModel
     @Binding var isSOS: Bool
     @Binding var isFAQOpened: Bool
     @State var swipeDistance = 0.0
@@ -294,8 +300,8 @@ struct TumblerView: View {
 }
 
 struct HeaderView: View {
-    var isSOS: Bool
-    var headerText: String {isSOS ? "SOS mode\nlaunched" : "Everything\nis ready"}
+//    var isSOS: Bool
+    var headerText: String
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -391,7 +397,7 @@ struct AnimatedCircle3D: View, Identifiable {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainScreenView()
-            .environmentObject(ViewModel())
+            .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
             .environmentObject(ContactsViewModel())
     }

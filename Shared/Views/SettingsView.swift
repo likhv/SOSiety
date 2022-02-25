@@ -9,24 +9,27 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
-    @State private var isPresented = false
+    @State var isPresented = false
     var body: some View {
-        VStack {
-            HStack {
-                Text ("Emergency contacts")
-                    .font(.title2).bold()
-                Spacer()
-                Button {
-                    isPresented.toggle()
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
+        ZStack {
+            Color.white.ignoresSafeArea()
+            VStack {
+                HStack {
+                    Text ("Emergency contacts")
+                        .font(.title2).bold()
+                    Spacer()
+                    Button {
+                        isPresented.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.black)
+                    }
                 }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
+                AddedContactsListView(isPresented: $isPresented)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            AddedContactsListView(isPresented: $isPresented)
         }
         .navigationTitle("Settings")
 //        .navigationBackButton(color: .black, text: "Back")
@@ -125,7 +128,7 @@ struct SettingsContactsListItemView: View {
 struct ContentView_PreviewsSettings: PreviewProvider {
     static var previews: some View {
         MainScreenView()
-            .environmentObject(ViewModel())
+            .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
             .environmentObject(ContactsViewModel())
             .previewDevice("iPhone 11")
