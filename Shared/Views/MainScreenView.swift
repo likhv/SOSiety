@@ -212,6 +212,7 @@ struct AdviceItemView: View {
 
 struct TumblerView: View {
     @EnvironmentObject var viewModel: SOSViewModel
+    @EnvironmentObject var contactsViewModel: ContactsViewModel
     @Binding var isSOS: Bool
     @Binding var isFAQOpened: Bool
     @State var swipeDistance = 0.0
@@ -289,7 +290,7 @@ struct TumblerView: View {
                     } else {
                         if swipeDistanceDelta + swipeDistance > leftPosition - 50 {
                             swipeDistance = leftPosition
-                            viewModel.startSOS()
+                            viewModel.startSOS(to: contactsViewModel.addedContacts)
                             drawHaptic.impactOccurred()
                         }
                     }

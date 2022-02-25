@@ -69,10 +69,10 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         isCheckIn = false
     }
     
-    func startSOS() {
+    func startSOS(to contacts: [ContactInfo]) {
         isSOS = true
         statusConsole.append("Sending in 0:15")
-        sendSMS()
+        sendSMS(to: contacts)
     }
     
     func stopSOS() {
@@ -81,7 +81,7 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         statusConsole = []
     }
     
-    func sendSMS() {
+    func sendSMS(to contacts: [ContactInfo]) {
         print("Sms sending")
         history.append("Notifications sent")
 //        if let accountSID = ProcessInfo.processInfo.environment["ACe684f07971128ca114d257bac6981ea0"],
@@ -89,15 +89,17 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
 
           let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
         
+        for contact in contacts {
+            let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "“#SOSiety\n\n\(userName) reported the fact of arrest.\n\nHis current location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)" ]
+            AF.request(url, method: .post, parameters: parameters)
+                  
+              .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
+              .responseJSON { response in
+                debugPrint(response)
+            }
+        }
         
-        
-          let parameters = ["From": "+19036485850", "To": "+393517544225", "Body": "https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)"]
-          AF.request(url, method: .post, parameters: parameters)
-                
-            .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
-            .responseJSON { response in
-              debugPrint(response)
-          }
+          
 //        }
     }
     
