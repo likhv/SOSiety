@@ -1,20 +1,16 @@
 PODS:
   - Alamofire (5.5.0)
-  - TwilioVoice (6.3.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.5)
-  - TwilioVoice (~> 6.3.0)
+  - Alamofire
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - TwilioVoice
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  TwilioVoice: 098a959181d4607921f5822d3c9f13043ea4075b
 
-PODFILE CHECKSUM: b84a707c4dc6d7792af79cf47a0cd5077c4d7bf9
+PODFILE CHECKSUM: 16477301b37fe99083bc5a8790d1290bcaecc069
 
 COCOAPODS: 1.11.2

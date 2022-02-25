@@ -6,8 +6,7 @@ target 'SOSiety (iOS)' do
   use_frameworks!
 
   # Pods for SOSiety (iOS)
-  pod 'Alamofire', '~> 5.5'
-  pod 'TwilioVoice', '~> 6.3.0'
+  pod 'Alamofire'
 
 end
 

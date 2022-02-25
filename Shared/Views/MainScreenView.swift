@@ -64,6 +64,9 @@ struct MainScreenView: View {
                 }
                 .offset(y: tumblerOffset/1.55)
             }
+            .onAppear {
+                viewModel.checkIfLocationServicesIsEnabled()
+            }
             .gesture(swipeUp)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

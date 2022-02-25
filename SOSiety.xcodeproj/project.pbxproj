@@ -86,7 +86,6 @@
 				3229BF2F28859A21305E74B2 /* Pods-SOSiety (macOS).debug.xcconfig */,
 				9C80116F878EE929331CE744 /* Pods-SOSiety (macOS).release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -480,10 +479,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = F2MVF3GV3N;
+				DEVELOPMENT_TEAM = 7S49FN692J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Uploading your contacts allows you to send notifications to the selected ones";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We request access to geolocation to inform selected contacts of your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -513,10 +513,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = F2MVF3GV3N;
+				DEVELOPMENT_TEAM = 7S49FN692J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Uploading your contacts allows you to send notifications to the selected ones";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We request access to geolocation to inform selected contacts of your current location.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

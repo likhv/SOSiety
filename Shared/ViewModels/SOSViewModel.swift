@@ -6,14 +6,13 @@
 //
 
 import Foundation
+import Alamofire
+import CoreLocation
 
-
-
-
-
-class ViewModel: ObservableObject {
+class ViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var isSOS: Bool = false
+    @Published var geoString: String = ""
     @Published var isCheckIn: Bool = false
     @Published var notificationCountdown: Int = 30
     @Published var history: [String] = []
@@ -25,6 +24,36 @@ class ViewModel: ObservableObject {
         Advice(text: "Try to fix facts related to your arrest - names and titles of policemen, their peculiarities, declared reason for arrest"),
         Advice(text: "Ask those who witnessed your arrest to share their contacts")
     ]
+    
+    var locationManager: CLLocationManager?
+    
+    func checkIfLocationServicesIsEnabled() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager = CLLocationManager()
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager!.delegate = self
+        } else {
+            
+        }
+    }
+    
+    func checkLocationAuthorization() {
+        guard let locationManager = locationManager else { return }
+        
+        switch locationManager.authorizationStatus {
+            
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            print("")
+        case .denied:
+            print("")
+        case .authorizedAlways, .authorizedWhenInUse:
+            break
+        @unknown default:
+            break
+        }
+    }
         
     func startCheckIn() {
         isCheckIn = true
@@ -37,6 +66,7 @@ class ViewModel: ObservableObject {
     func startSOS() {
         isSOS = true
         statusConsole.append("Sending in 0:15")
+        sendSMS()
     }
     
     func stopSOS() {
@@ -48,6 +78,25 @@ class ViewModel: ObservableObject {
     func sendSMS() {
         print("Sms sending")
         history.append("Notifications sent")
+//        if let accountSID = ProcessInfo.processInfo.environment["ACe684f07971128ca114d257bac6981ea0"],
+//           let authToken = ProcessInfo.processInfo.environment["4588dd65f127f5586583680a5feac55d"] {
+
+          let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
+        
+        
+        
+          let parameters = ["From": "+19036485850", "To": "+393517544225", "Body": "https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)"]
+          AF.request(url, method: .post, parameters: parameters)
+                
+            .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
+            .responseJSON { response in
+              debugPrint(response)
+          }
+//        }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationAuthorization()
     }
     
 }
