@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
-    @State private var isPresented = false
+    @State var isPresented = false
     var body: some View {
         VStack {
             HStack {

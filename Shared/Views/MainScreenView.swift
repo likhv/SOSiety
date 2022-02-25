@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainScreenView: View {
     @EnvironmentObject var viewModel: SOSViewModel
-    @State var isInfoPresenting = false
+    @State var isInfoPresenting = true
+    @State var firstScreenPresented = true
     @State var isFAQOpened = false
     @State var FAQHeight = 0.0
     @State var tumblerOffset = 0.0
@@ -63,6 +64,9 @@ struct MainScreenView: View {
                     }
                 }
                 .offset(y: tumblerOffset/1.55)
+                if viewModel.isFirstStart {
+                    FirstStartView()
+                }
             }
             .gesture(swipeUp)
             .navigationBarTitleDisplayMode(.inline)
@@ -81,7 +85,7 @@ struct MainScreenView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView(), label: {
-                        Image(systemName: "gearshape")
+                        Image(systemName: "person.crop.circle.badge.plus")
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.black)
                     })
@@ -91,6 +95,9 @@ struct MainScreenView: View {
             .fullScreenCover(isPresented: $isInfoPresenting) {
                 InformationView(isInfoPresenting: $isInfoPresenting)
             }
+//            .fullScreenCover(isPresented: $firstScreenPresented) {
+//                FirstStartView(firstScreenPresented: $firstScreenPresented)
+//            }
         }
     }
     var swipeUp: some Gesture {

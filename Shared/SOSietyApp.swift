@@ -12,8 +12,8 @@ struct SOSietyApp: App {
     var body: some Scene {
         WindowGroup {
 //            LoopedWaveAnimationView()
-//            MainScreenView()
-            FirstStartView()
+            MainScreenView()
+//            FirstStartView()
                 .preferredColorScheme(.light)
 //            SettingsView()
                 .environmentObject(SOSViewModel())

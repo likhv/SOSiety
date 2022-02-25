@@ -6,44 +6,52 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct FirstStartView: View {
     @EnvironmentObject var informationScreenViewModel: InformationScreenViewModel
     @EnvironmentObject var contactsViewModel: ContactsViewModel
+    @EnvironmentObject var SOSViewModel: SOSViewModel
+    @State var nameAdded = false
     var body: some View {
-        ZStack {
-            Color.sosietyPaper.ignoresSafeArea()
-            TabView {
-                FirstStartEnterNameView()
-                FirstStartAddContactView()
-                ForEach(informationScreenViewModel.informationScreens, id:\.id) {informationScreen in
-                    InformationItem(informationScreen: informationScreen)
-                }
-                
-            }
-            if contactsViewModel.allContacts.count != 0 {
-                VStack {
-                    Spacer()
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .frame(height: 60)
-                        .overlay(
-                            Text("Save settings")
-                                .foregroundColor(.white)
-                        )
-                        .padding(25)
-                        .padding(.bottom, 40)
-                }
-            }
+            ZStack {
+                Color.sosietyPaper.ignoresSafeArea()
+                        if !nameAdded {
+                            FirstStartEnterNameView(nameAdded: $nameAdded)
+                        } else {
+                            SettingsView()
+                            if contactsViewModel.allContacts.count != 0 {
+                                VStack {
+                                    Spacer()
+                                    Button { SOSViewModel.isFirstStart = false } label: {
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .frame(height: 55)
+                                            .overlay(
+                                                Text("Save settings")
+                                                    .foregroundColor(.white)
+                                            )
+                                            .padding(25)
+                                            .padding(.bottom, 40)
+                                    }
+                                }
+                            }
+//                            FirstStartAddContactView(nameAdded: $nameAdded)
+                        }
+                    }
+        
+               
+            
+            .tabViewStyle(.page)
+            .indexViewStyle(.page(backgroundDisplayMode: .always))
+//            .navigationTitle("How the app works")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .tabViewStyle(.page)
-        .indexViewStyle(.page(backgroundDisplayMode: .always))
-        .navigationTitle("How the app works")
-        .navigationBarTitleDisplayMode(.inline)
-    }
+    
 }
 
 struct FirstStartEnterNameView: View {
     @EnvironmentObject var SOSViewModel: SOSViewModel
+    @Binding var nameAdded: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
 
@@ -68,7 +76,7 @@ struct FirstStartEnterNameView: View {
                             .textFieldStyle(.plain)
                             .padding()
                         if SOSViewModel.userName != "" {
-                            Button {} label: {
+                            Button { nameAdded = true } label: {
                                 Image(systemName: "arrow.right.circle.fill")
                                     .font(.system(size: 24, weight: .medium))
                                     .foregroundColor(.black)
@@ -85,37 +93,57 @@ struct FirstStartEnterNameView: View {
 }
 
 struct FirstStartAddContactView: View {
+    @EnvironmentObject var SOSViewModel: SOSViewModel
     @EnvironmentObject var contactsViewModel: ContactsViewModel
     @State private var isPresented = false
+    @Binding var nameAdded: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 50) {
 
-            Text("Choose contacts\nyou want to inform\nin case of arrest")
+            Text("\(SOSViewModel.userName),\nlet's choose contacts\nyou want to inform")
                 .foregroundColor(.black)
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.horizontal, 2)
-
-            Button { isPresented = true } label : {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .frame(height: 55)
-                    .foregroundColor(.black)
-                    .overlay(
-                        HStack {
-                            Image(systemName: "person.badge.plus")
-                                .foregroundColor(.white)
-                                .font(.system(size: 18, weight: .medium))
-                            Text("Choose contacts")
-                                .foregroundColor(.white)
-                                .font(.system(size: 16, weight: .medium))
-                        }
-                    )
-                    
+            if contactsViewModel.allContacts.count == 0 {
+                
+                Button { isPresented = true } label : {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .frame(height: 55)
+                        .foregroundColor(.black)
+                        .overlay(
+                            HStack {
+                                Image(systemName: "person.badge.plus")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 18, weight: .medium))
+                                Text("Choose contacts")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 16, weight: .medium))
+                            }
+                        )
+                        
+                }
+            } else {
+                List() {
+                    ForEach($contactsViewModel.addedContacts) { contact in
+                        SettingsContactsListItemView(contact: contact)
+                    }
+                }
+                
             }
             Spacer()
         }
         .padding(.top, 100)
         .padding(.horizontal, 30)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button { nameAdded = false } label: {
+                    Text("Change name")
+                        .font(.system(size: 16, weight: .regular))
+                        .foregroundColor(.gray)
+                }
+            }
+        }
         .fullScreenCover(isPresented: $isPresented) {
             ContactsListView(isPresented: $isPresented)
         }
