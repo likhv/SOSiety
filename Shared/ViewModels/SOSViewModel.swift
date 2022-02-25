@@ -90,7 +90,8 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
           let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
         
         for contact in contacts {
-            let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "“#SOSiety\n\n\(userName) reported the fact of arrest.\n\nHis current location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)\n\nInstuctions: https://readymag.com/3449727" ]
+            let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "#SOSiety\n\n\(userName) reported the fact of arrest.\n\nHis current location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)\n\nInstuctions: https://readymag.com/3449727" ]
+
             AF.request(url, method: .post, parameters: parameters)
                   
               .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
