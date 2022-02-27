@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Alamofire
+import SystemConfiguration
+import Contacts
 
 struct MainScreenView: View {
     @EnvironmentObject var viewModel: SOSViewModel
@@ -32,8 +35,10 @@ struct MainScreenView: View {
                         .ignoresSafeArea()
                     
                 }
-                StatusConsole()
-                    .offset(y: 80+tumblerOffset)
+                if viewModel.isSOS {
+                    TimerView().offset(y: 80+tumblerOffset)
+                    StatusConsole().offset(y: 80+tumblerOffset)
+                }
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
                 
@@ -142,10 +147,8 @@ struct StatusConsole: View {
     @EnvironmentObject var viewModel: SOSViewModel
     var body: some View {
         VStack {
-            ForEach(viewModel.statusConsole, id: \.self) { status in
-               Text(status)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(.black)
+            ForEach(viewModel.statusConsole, id: \.self) {status in
+                Text(status)
             }
         }
     }
@@ -300,6 +303,20 @@ struct TumblerView: View {
     }
 }
 
+struct TimerView: View{
+    @State private var timeRemaining = 1200
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var body: some View {
+        let abc = timeRemaining > 60 ? "\(Int(timeRemaining / 60)):\(timeRemaining % 60)" : "\(timeRemaining)"
+        Text("Sending in \(abc)")
+        .onReceive(timer) { time in
+            if timeRemaining > 0 {
+                timeRemaining -= 1
+            }
+        }
+    }
+}
+
 struct HeaderView: View {
 //    var isSOS: Bool
     var headerText: String
@@ -401,5 +418,11 @@ struct ContentView_Previews: PreviewProvider {
             .environmentObject(SOSViewModel())
             .environmentObject(InformationScreenViewModel())
             .environmentObject(ContactsViewModel())
+    }
+}
+
+struct TimerView_Previews: PreviewProvider {
+    static var previews: some View {
+        TimerView()
     }
 }

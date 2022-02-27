@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import CoreLocation
+import SwiftUI
 
 
 
@@ -30,7 +31,7 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         Advice(text: "Try to fix facts related to your arrest - names and titles of policemen, their peculiarities, declared reason for arrest"),
         Advice(text: "Ask those who witnessed your arrest to share their contacts")
     ]
-    
+    @Published var timeRemaining: Int = 100
     var locationManager: CLLocationManager?
     
     func checkIfLocationServicesIsEnabled() {
@@ -71,8 +72,8 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func startSOS(to contacts: [ContactInfo]) {
         isSOS = true
-        statusConsole.append("Sending in 0:15")
-        sendSMS(to: contacts)
+//        statusConsole.append(TimerView())
+//        sendSMS(to: contacts)
     }
     
     func stopSOS() {
