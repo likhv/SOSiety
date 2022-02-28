@@ -29,15 +29,18 @@ struct MainScreenView: View {
                 if viewModel.isSOS && !isFAQOpened {
                     LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0))
                         .ignoresSafeArea()
-
+                    
                 } else if viewModel.isSOS {
                     LoopedWaveAnimationView(center: CGPoint(x: UIScreen.main.bounds.width-20.0-20.0-25.0, y: UIScreen.main.bounds.height/2 + 28.0+tumblerOffset))
                         .ignoresSafeArea()
                     
                 }
                 if viewModel.isSOS {
-                    TimerView().offset(y: 80+tumblerOffset)
-                    StatusConsole().offset(y: 80+tumblerOffset)
+                    if viewModel.statusConsole.count == 0 {
+                        TimerView().offset(y: 80+tumblerOffset)
+                    } else {
+                        StatusConsole().offset(y: 80+tumblerOffset)
+                    }
                 }
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
@@ -96,15 +99,15 @@ struct MainScreenView: View {
                             .font(.system(size: 16, weight: .bold))
                             .foregroundColor(.black)
                     })
-               }
+                }
             }
             .accentColor(.black)
             .fullScreenCover(isPresented: $isInfoPresenting) {
                 InformationView(isInfoPresenting: $isInfoPresenting)
             }
-//            .fullScreenCover(isPresented: $firstScreenPresented) {
-//                FirstStartView(firstScreenPresented: $firstScreenPresented)
-//            }
+            //            .fullScreenCover(isPresented: $firstScreenPresented) {
+            //                FirstStartView(firstScreenPresented: $firstScreenPresented)
+            //            }
         }
     }
     var swipeUp: some Gesture {
@@ -137,7 +140,7 @@ struct MainScreenView: View {
                 headerOpacity = 0.0
                 drawHaptic.impactOccurred()
             }
-//            FAQHeight = UIScreen.main.bounds.height - 250.0
+            //            FAQHeight = UIScreen.main.bounds.height - 250.0
         }
     }
     
@@ -157,7 +160,7 @@ struct StatusConsole: View {
 struct AdviceTabView: View {
     @EnvironmentObject var viewModel: SOSViewModel
     @Binding var isFAQPresenting: Bool
-
+    
     var body: some View {
         ZStack {
             VStack {
@@ -189,10 +192,10 @@ struct AdviceItemView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 1) {
-//                Text(adviceTitle)
-//                    .font(.system(size: 26, weight: .bold))
-//                    .foregroundColor(.black)
-//                    .padding(.bottom, 14)
+                //                Text(adviceTitle)
+                //                    .font(.system(size: 26, weight: .bold))
+                //                    .foregroundColor(.black)
+                //                    .padding(.bottom, 14)
                 Text("\(number)/\(adviceAmount)")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(.black)
@@ -253,7 +256,7 @@ struct TumblerView: View {
                             .simultaneousGesture(dragSOS)
                     })
                 .padding(.horizontal, 20)
-//                .ignoresSafeArea()
+            //                .ignoresSafeArea()
         }
     }
     var dragSOS: some Gesture {
@@ -267,10 +270,10 @@ struct TumblerView: View {
                 withAnimation(.linear){
                     if value.translation.width + swipeDistance > UIScreen.main.bounds.width - 40 - 10 - circleDiameter {
                         swipeDistanceDelta = UIScreen.main.bounds.width - 40 - 10 - circleDiameter - swipeDistance
-
+                        
                     } else if value.translation.width + swipeDistance < 5.0 {
                         swipeDistanceDelta = -swipeDistance
-
+                        
                     } else {
                         swipeDistanceDelta = value.translation.width
                     }
@@ -279,7 +282,7 @@ struct TumblerView: View {
             .onEnded { value in
                 let leftPosition = UIScreen.main.bounds.width - 40 - 10 - circleDiameter
                 let rightPosition = 0.0
-
+                
                 withAnimation(.linear){
                     textOpacity = 1.0
                 }
@@ -293,7 +296,7 @@ struct TumblerView: View {
                     } else {
                         if swipeDistanceDelta + swipeDistance > leftPosition - 50 {
                             swipeDistance = leftPosition
-                            viewModel.startSOS(to: contactsViewModel.addedContacts)
+                            viewModel.isSOS = true
                             drawHaptic.impactOccurred()
                         }
                     }
@@ -304,21 +307,31 @@ struct TumblerView: View {
 }
 
 struct TimerView: View{
-    @State private var timeRemaining = 1200
+    @State private var timeRemaining = 15
+    @EnvironmentObject var viewModel: SOSViewModel
+    @EnvironmentObject var contactsViewModel: ContactsViewModel
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
-        let abc = timeRemaining > 60 ? "\(Int(timeRemaining / 60)):\(timeRemaining % 60)" : "\(timeRemaining)"
-        Text("Sending in \(abc)")
-        .onReceive(timer) { time in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
+        Text("Sending in \(timeString(time: timeRemaining))")
+            .onReceive(timer) { time in
+                if self.timeRemaining > 0 {
+                    self.timeRemaining -= 1
+                }else{
+                    self.timer.upstream.connect().cancel()
+                    viewModel.startSOS(to: contactsViewModel.addedContacts)
+                }
             }
-        }
+    }
+    
+    func timeString(time: Int) -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        return String(format:"%02i:%02i", minutes, seconds)
     }
 }
 
 struct HeaderView: View {
-//    var isSOS: Bool
+    //    var isSOS: Bool
     var headerText: String
     var body: some View {
         VStack(alignment: .leading) {

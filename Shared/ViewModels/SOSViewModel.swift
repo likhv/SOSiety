@@ -71,9 +71,9 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func startSOS(to contacts: [ContactInfo]) {
-        isSOS = true
+        
 //        statusConsole.append(TimerView())
-//        sendSMS(to: contacts)
+        sendSMS(to: contacts)
     }
     
     func stopSOS() {
@@ -84,9 +84,7 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func sendSMS(to contacts: [ContactInfo]) {
         print("Sms sending")
-        history.append("Notifications sent")
-//        if let accountSID = ProcessInfo.processInfo.environment["ACe684f07971128ca114d257bac6981ea0"],
-//           let authToken = ProcessInfo.processInfo.environment["4588dd65f127f5586583680a5feac55d"] {
+        self.statusConsole.append("Notification sending")
 
           let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
         
@@ -97,12 +95,9 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                   
               .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
               .responseJSON { response in
-                debugPrint(response)
+                  self.statusConsole[0] = "Notification sent"
             }
         }
-        
-          
-//        }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
