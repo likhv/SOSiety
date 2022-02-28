@@ -125,6 +125,7 @@ struct ContactsListItemViewAdded: View {
             HStack {
                 Text("\(contact.firstName) \(contact.lastName) ")
                     .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(Color.black)
                 Spacer()
                 Image(systemName:"checkmark.circle.fill")
                     .font(.system(size: 20, weight: .bold))
