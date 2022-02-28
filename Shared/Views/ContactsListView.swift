@@ -7,30 +7,58 @@
 
 import SwiftUI
 
+struct ContactsListView_preview: View {
+    @State var isPresented: Bool = true
+    var body: some View {
+        ContactsListView(isPresented: $isPresented)
+    }
+}
+
 struct ContactsListView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
-//    var contactsList: [ContactInfo] = [ContactInfo(), ContactInfo(), ContactInfo()]
     @Binding var isPresented: Bool
     @State var searchText = ""
     var body: some View {
         NavigationView {
             ZStack {
-                List() {
-                    ForEach(searchResults.filter { $0.firstName != "" || $0.lastName != "" } ) { contact in
-                        Button {
-                            if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-                                contactsViewModel.addedContacts.remove(at: index)
-                            } else {
-                                contactsViewModel.addedContacts.append(contact)
+                VStack(alignment: .leading) {
+//                    List() {
+                        ForEach(contactsViewModel.addedContacts) { contact in
+                            Divider()
+                            Button {
+                                if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+                                    contactsViewModel.addedContacts.remove(at: index) }
+                            } label: {
+                                ContactsListItemViewAdded(contact: contact)
                             }
-                        } label: {
-                            ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier})
-              
+//                            Text("\(contact.firstName) \(contact.lastName) ")
+//                                .font(.system(size: 16, weight: .medium))
+                        }
+                        .padding(.leading, 20)
+//                    }
+//                    .listStyle(.inset)
+                    List() {
+                        ForEach(searchResults.filter { $0.firstName != "" || $0.lastName != "" } ) { contact in
+                            if !contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier}  {
+                                Button {
+                                    if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+                                        contactsViewModel.addedContacts.remove(at: index)
+                                    } else {
+                                        if contactsViewModel.addedContacts.count < 5 {
+                                            contactsViewModel.addedContacts
+                                                .append(contact)
+                                        }
+                                    }
+                                } label: {
+                                    ContactsListItemView(addedContacts: contactsViewModel.addedContacts, contact: contact, isAdded: contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier})
+                      
+                                }
+                            }
                         }
                     }
+                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                    .listStyle(.inset)
                 }
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-                .listStyle(.inset)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -90,8 +118,38 @@ struct ContactsListItemView: View {
     }
 }
 
-//struct ContactsListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContactsListView()
-//    }
-//}
+struct ContactsListItemViewAdded: View {
+    var contact: ContactInfo
+    var isAdded: Bool = true
+    var body: some View {
+            HStack {
+                Text("\(contact.firstName) \(contact.lastName) ")
+                    .font(.system(size: 16, weight: .medium))
+                Spacer()
+                Image(systemName:"checkmark.circle.fill")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color.sosietyGreen)
+                    .opacity(isAdded ? 1 : 0)
+                    .padding(.trailing, 20)
+                //            else {
+                //                Image(systemName:"checkmark.circle")
+                //                    .font(.system(size: 16, weight: .bold))
+                //                    .foregroundColor(.black)
+                //            }
+            }
+            .padding(.vertical, 6)
+//        .onAppear() {
+//            isAdded = addedContacts.contains(contact)
+//        }
+    }
+}
+
+
+struct ContactsListView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContactsListView_preview()
+            .environmentObject(SOSViewModel())
+            .environmentObject(InformationScreenViewModel())
+            .environmentObject(ContactsViewModel())
+    }
+}
