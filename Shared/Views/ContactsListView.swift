@@ -15,6 +15,7 @@ struct ContactsListView_preview: View {
 }
 
 struct ContactsListView: View {
+    @Environment(\.dismissSearch) private var dismissSearch
     @EnvironmentObject var contactsViewModel: ContactsViewModel
     @Binding var isPresented: Bool
     @State var searchText = ""
@@ -22,21 +23,18 @@ struct ContactsListView: View {
         NavigationView {
             ZStack {
                 VStack(alignment: .leading) {
-//                    List() {
-                        ForEach(contactsViewModel.addedContacts) { contact in
-                            Divider()
-                            Button {
-                                if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-                                    contactsViewModel.addedContacts.remove(at: index) }
-                            } label: {
-                                ContactsListItemViewAdded(contact: contact)
-                            }
-//                            Text("\(contact.firstName) \(contact.lastName) ")
-//                                .font(.system(size: 16, weight: .medium))
+                    ForEach(contactsViewModel.addedContacts) { contact in
+                        Divider()
+                        Button {
+                            if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+                                contactsViewModel.addedContacts.remove(at: index) }
+                        } label: {
+                            ContactsListItemViewAdded(contact: contact)
                         }
+                    }
                         .padding(.leading, 20)
-//                    }
-//                    .listStyle(.inset)
+                    Divider()
+                        .padding(.leading, 20)
                     List() {
                         ForEach(searchResults.filter { $0.firstName != "" || $0.lastName != "" } ) { contact in
                             if !contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier}  {
@@ -47,6 +45,8 @@ struct ContactsListView: View {
                                         if contactsViewModel.addedContacts.count < 5 {
                                             contactsViewModel.addedContacts
                                                 .append(contact)
+                                            dismissSearch()
+                                            
                                         }
                                     }
                                 } label: {

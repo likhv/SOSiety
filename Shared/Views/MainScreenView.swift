@@ -56,7 +56,7 @@ struct MainScreenView: View {
                     Button { toggleFAQ() } label: {
                         VStack {
                             HStack {
-                                Text(isFAQOpened ? "Close advices" : "Legal advices")
+                                Text(isFAQOpened ? "Close advice" : "Legal advice")
                                     .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 5)
                                 Image(systemName: "multiply")
@@ -87,18 +87,22 @@ struct MainScreenView: View {
                         .foregroundColor(.black)
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {isInfoPresenting = true} label: {
-                        Image(systemName: "info.circle")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.black)
+                    if !viewModel.firstScreenPresented {
+                        Button {isInfoPresenting = true} label: {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                        }
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: SettingsView(), label: {
-                        Image(systemName: "person.crop.circle.badge.plus")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.black)
-                    })
+                    if !viewModel.firstScreenPresented {
+                        NavigationLink(destination: SettingsView(), label: {
+                            Image(systemName: "person.crop.circle.badge.plus")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.black)
+                        })
+                    }
                 }
             }
             .accentColor(.black)
@@ -307,7 +311,7 @@ struct TumblerView: View {
 }
 
 struct TimerView: View{
-    @State private var timeRemaining = 15
+    @State private var timeRemaining = 5
     @EnvironmentObject var viewModel: SOSViewModel
     @EnvironmentObject var contactsViewModel: ContactsViewModel
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()

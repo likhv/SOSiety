@@ -18,7 +18,7 @@ struct FirstStartView: View {
     var body: some View {
         ZStack {
             Color.sosietyPaper.ignoresSafeArea()
-            HeaderView(headerText: SOSViewModel.userName == "" ? "Let's start with introduction. What’s your name?" : "\(SOSViewModel.userName), choose contacts you want to inform")
+            HeaderView(headerText: SOSViewModel.userName == "" ? "What’s your name?" : "\(SOSViewModel.userName), choose contacts you want to inform")
             if SOSViewModel.userName == "" {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(.black, lineWidth: 2)
@@ -96,7 +96,7 @@ struct FirstStartEnterNameView: View {
     @Binding var nameAdded: Bool
     var body: some View {
         HStack {
-            Text("Let's start with introduction. What’s your name?")
+            Text("What’s your name?")
                 .font(.system(size: 38, weight: .bold))
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.black)
