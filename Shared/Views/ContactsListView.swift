@@ -19,10 +19,40 @@ struct ContactsListView: View {
     @EnvironmentObject var contactsViewModel: ContactsViewModel
     @Binding var isPresented: Bool
     @State var searchText = ""
+    @State var searchOn = true
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .frame(height: 40)
+                        .opacity(0.15)
+                        .foregroundColor(.gray)
+                        .onTapGesture() {
+                            searchOn = true
+                        }
+                        .overlay(
+                            HStack {
+                                if searchOn {
+                                    TextField("Search", text: $searchText)
+                                        .foregroundColor(.black)
+                                    Spacer()
+                                    if searchText != "" {
+                                        Button {
+                                            searchText = ""
+//                                            searchOn = false
+                                            
+                                        } label: {
+                                            Image(systemName: "xmark.circle.fill")
+                                                .font(.system(size: 20, weight: .medium))
+                                                .foregroundColor(.black)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 10)
+                        )
+                        .padding(16)
                     ForEach(contactsViewModel.addedContacts) { contact in
                         Divider()
                         Button {
@@ -56,7 +86,7 @@ struct ContactsListView: View {
                             }
                         }
                     }
-                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+//                    .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                     .listStyle(.inset)
                 }
             }
@@ -131,7 +161,7 @@ struct ContactsListItemViewAdded: View {
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color.sosietyGreen)
                     .opacity(isAdded ? 1 : 0)
-                    .padding(.trailing, 20)
+                    .padding(.trailing, 25)
                 //            else {
                 //                Image(systemName:"checkmark.circle")
                 //                    .font(.system(size: 16, weight: .bold))
