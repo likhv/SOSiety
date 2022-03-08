@@ -100,9 +100,19 @@ struct ContactsListView: View {
     //                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button { isPresented = false } label: {
-                        Text("Save")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.black)
+                        if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                            Text("Сохранить")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.black)
+                        } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                            Text("Sauvegarder")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.black)
+                        } else {
+                            Text("Save")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.black)
+                        }
                     }
                 }
             }

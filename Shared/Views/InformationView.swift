@@ -14,9 +14,20 @@ struct InformationView: View {
         ZStack {
             Color.sosietyPaper.ignoresSafeArea()
             TabView {
-                ForEach(informationScreenViewModel.informationScreens, id:\.id) {informationScreen in
-                    InformationItem(informationScreen: informationScreen)
+                if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                    ForEach(informationScreenViewModel.ruInformationScreens, id:\.id) {informationScreen in
+                        InformationItem(informationScreen: informationScreen)
+                    }
+                } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                    ForEach(informationScreenViewModel.frInformationScreens, id:\.id) {informationScreen in
+                        InformationItem(informationScreen: informationScreen)
+                    }
+                } else {
+                    ForEach(informationScreenViewModel.engInformationScreens, id:\.id) {informationScreen in
+                        InformationItem(informationScreen: informationScreen)
+                    }
                 }
+                
             }
             Button {isInfoPresenting = false} label: {
                 Image(systemName: "multiply")

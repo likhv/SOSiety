@@ -15,8 +15,17 @@ struct SettingsView: View {
             Color.white.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text ("Emergency contacts")
-                        .font(.title2).bold()
+                    if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                        Text ("Экстренные контакты")
+                            .font(.title2).bold()
+                    } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                        Text ("Contacts d’urgence")
+                            .font(.title2).bold()
+                    } else {
+                        Text ("Emergency contacts")
+                            .font(.title2).bold()
+                    }
+                    
                     Spacer()
                     Button {
                         isPresented.toggle()
@@ -111,9 +120,19 @@ struct SettingsContactsListItemView: View {
                         .font(.system(size: 15, weight: .regular))
                 }
                 HStack {
-                    Text("Share location")
-                        .font(.system(size: 15, weight: .regular))
-                        .padding(.top, 5)
+                    if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                        Text("Делиться местонахождением в экстренном случае")
+                            .font(.system(size: 15, weight: .regular))
+                            .padding(.top, 5)
+                    } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                        Text("Partager ma position en cas d'urgence")
+                            .font(.system(size: 15, weight: .regular))
+                            .padding(.top, 5)
+                    } else {
+                        Text("Share location in case of emergency")
+                            .font(.system(size: 15, weight: .regular))
+                            .padding(.top, 5)
+                    }
                     Toggle("", isOn: $contact.isLocationShared)
                 }
                     

@@ -170,9 +170,20 @@ struct AdviceTabView: View {
             VStack {
                 Divider()
                 TabView {
-                    ForEach(0..<viewModel.adviceList.count) { n in
-                        AdviceItemView(number: n+1, adviceAmount: viewModel.adviceList.count, text: viewModel.adviceList[n].text)
+                    if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                        ForEach(0..<viewModel.ruAdviceList.count) { n in
+                            AdviceItemView(number: n+1, adviceAmount: viewModel.ruAdviceList.count, text: viewModel.ruAdviceList[n].text)
+                        }
+                    } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                        ForEach(0..<viewModel.frAdviceList.count) { n in
+                            AdviceItemView(number: n+1, adviceAmount: viewModel.frAdviceList.count, text: viewModel.frAdviceList[n].text)
+                        }
+                    } else {
+                        ForEach(0..<viewModel.enAdviceList.count) { n in
+                            AdviceItemView(number: n+1, adviceAmount: viewModel.enAdviceList.count, text: viewModel.enAdviceList[n].text)
+                        }
                     }
+                    
                 }
                 .padding(.bottom, 30)
                 .statusBar(hidden: true)
@@ -238,13 +249,32 @@ struct TumblerView: View {
                 .clipShape(RoundedRectangle(cornerRadius: circleDiameter+10, style: .circular))
                 .overlay(
                     ZStack {
-                        Text(isSOS ? "Swipe left to stop" : "Swipe right to start")
-                            .font(.system(size: 18, weight: .regular))
-                            .foregroundColor(.sosietyPaper.opacity(0.8))
-                            .padding(!isSOS ? .leading : .trailing, 10)
-                            .animation(.easeInOut, value: isSOS)
-                            .multilineTextAlignment(.center)
-                            .opacity(textOpacity)
+                        if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                            Text(isSOS ? "Смахни влево, чтобы его выключить" : "Смахни вправо, чтобы включить режим SOS")
+                                .font(.system(size: 18, weight: .regular))
+                                .foregroundColor(.sosietyPaper.opacity(0.8))
+                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .animation(.easeInOut, value: isSOS)
+                                .multilineTextAlignment(.center)
+                                .opacity(textOpacity)
+                        } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                            Text(isSOS ? "Swipe vers la gauche pour le désactiver" : "Swipe vers la droite pour activer le mode SOS")
+                                .font(.system(size: 18, weight: .regular))
+                                .foregroundColor(.sosietyPaper.opacity(0.8))
+                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .animation(.easeInOut, value: isSOS)
+                                .multilineTextAlignment(.center)
+                                .opacity(textOpacity)
+                        } else {
+                            Text(isSOS ? "Swipe left to turn it off" : "Swipe right to activate the SOS mode")
+                                .font(.system(size: 18, weight: .regular))
+                                .foregroundColor(.sosietyPaper.opacity(0.8))
+                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .animation(.easeInOut, value: isSOS)
+                                .multilineTextAlignment(.center)
+                                .opacity(textOpacity)
+                        }
+                        
                         Circle()
                             .frame(width: circleDiameter, height: circleDiameter, alignment: .center)
                         //  .foregroundColor(Color.sosietyRed)

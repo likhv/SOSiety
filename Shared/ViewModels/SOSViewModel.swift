@@ -24,12 +24,26 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var statusConsole: [String] = []
     @Published var userName: String = ""
     @Published var firstScreenPresented: Bool = true
-    @Published var adviceList: [Advice] = [
-        Advice(text: "Stay calm and confident, don't resist or panic"),
-        Advice(text: "Inform trusted contacts about your arrest, location and ask them to find a lawyer for you in case you don't have one"),
-        Advice(text: "Don't be provoked, respond to questions or sign anything suspicious, especially plain papers"),
-        Advice(text: "Try to fix facts related to your arrest - names and titles of policemen, their peculiarities, declared reason for arrest"),
-        Advice(text: "Ask those who witnessed your arrest to share their contacts")
+    @Published var enAdviceList: [Advice] = [
+        Advice(text: "Stay calm and confident. Don’t panic and don’t resist."),
+        Advice(text: "Don’t be provoked. We strongly recommend you avoid answering any questions and signing anything, especially blank sheets of paper."),
+        Advice(text: "If possible, find out the official reason of your detention. Try to memorise and/or even to photograph / to record on video the details of the detention, including names and titles of policemen and their distinguishing features."),
+        Advice(text: "It is advisable to ask any witnesses for their contact details"),
+//        Advice(text: "Ask those who witnessed your arrest to share their contacts")
+    ]
+    @Published var ruAdviceList: [Advice] = [
+        Advice(text: "Сохраняй спокойствие и уверенность. Пожалуйста, не паникуй и не оказывай сопротивление."),
+        Advice(text: "Не поддавайся на провокации. Мы настоятельно рекомендуем тебе не отвечать ни на какие вопросы и ничего не подписывать, особенно чистые листы бумаги."),
+        Advice(text: "По возможности выясни официальную причину задержания. Постарайся запомнить и/или снять на фото/видео детали, касающиеся задержания, включая фамилии и должности полицейских, и их отличительные черты."),
+        Advice(text: "Рекомендуем взять контактные данные у всех свидетелей задержания."),
+//        Advice(text: "Ask those who witnessed your arrest to share their contacts")
+    ]
+    @Published var frAdviceList: [Advice] = [
+        Advice(text: "Il est essentiel de rester calme et confiant, de ne pas paniquer et d’opposer aucune résistance."),
+        Advice(text: "Ne répond pas aux provocations. Nous te recommandons très fortement d’éviter de répondre aux questions et de ne pas signer quoi que ce soit, surtout des feuilles de papier vierges."),
+        Advice(text: "Si possible, essaie de savoir le motif officiel de ta détention. Essaie également de mémoriser et/ou bien de photographier / d’enregistrer sur vidéo les détails de la détention, y compris les noms et les titres des policiers et leurs caractéristiques distinctives."),
+        Advice(text: "Il est conseillé de relever les coordonnées des témoins."),
+//        Advice(text: "Ask those who witnessed your arrest to share their contacts")
     ]
     @Published var timeRemaining: Int = 100
     var locationManager: CLLocationManager?

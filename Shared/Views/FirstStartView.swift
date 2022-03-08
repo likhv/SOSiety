@@ -18,7 +18,14 @@ struct FirstStartView: View {
     var body: some View {
         ZStack {
             Color.sosietyPaper.ignoresSafeArea()
-            HeaderView(headerText: SOSViewModel.userName == "" ? "What’s your name?" : "\(SOSViewModel.userName), choose contacts you want to inform")
+            if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                HeaderView(headerText: SOSViewModel.userName == "" ? "Пожалуйста, представься. Как тебя зовут?" : "\(SOSViewModel.userName), выбери контакты, которые ты бы хотел уведомить в случае задержания")
+            } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                HeaderView(headerText: SOSViewModel.userName == "" ? "Présente-toi. Comment t'appelles tu?" : "\(SOSViewModel.userName), sélectionne les contacts que tu souhaiterais notifier en cas de détention")
+            } else {
+                HeaderView(headerText: SOSViewModel.userName == "" ? "Introduce yourself. What’s your name?" : "\(SOSViewModel.userName), select contacts you’d like to notify in case of detention")
+            }
+            
             if SOSViewModel.userName == "" {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(.black, lineWidth: 2)
@@ -49,9 +56,20 @@ struct FirstStartView: View {
                                 Image(systemName: "person.badge.plus")
                                     .foregroundColor(.white)
                                     .font(.system(size: 18, weight: .medium))
-                                Text("Choose contacts")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 16, weight: .medium))
+                                if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                                    Text("Добавить экстренные контакты")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16, weight: .medium))
+                                } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                                    Text("Ajouter les contacts d’urgence")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16, weight: .medium))
+                                } else {
+                                    Text("Add emergency contacts")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16, weight: .medium))
+                                }
+                                
                             }).padding(25)
                 }
             }
@@ -69,9 +87,20 @@ struct FirstStartView: View {
                                         Image(systemName: "person.badge.plus")
                                             .foregroundColor(.white)
                                             .font(.system(size: 18, weight: .medium))
-                                        Text("Save contacts")
-                                            .foregroundColor(.white)
-                                            .font(.system(size: 16, weight: .medium))
+                                        if Locale.preferredLanguages[0].prefix(2) == "ru" {
+                                            Text("Сохранить контакты")
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 16, weight: .medium))
+                                        } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
+                                            Text("Sauvegarder les contacts")
+                                                .font(.system(size: 15, weight: .regular))
+                                                .padding(.top, 5)
+                                        } else {
+                                            Text("Save contacts")
+                                                .foregroundColor(.white)
+                                                .font(.system(size: 16, weight: .medium))
+                                        }
+                                        
                                     }).padding(25)
                         }
                     }
