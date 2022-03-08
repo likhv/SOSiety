@@ -53,19 +53,20 @@ struct ContactsListView: View {
                             .padding(.horizontal, 10)
                         )
                         .padding(16)
-                    ForEach(contactsViewModel.addedContacts) { contact in
-                        Divider()
-                        Button {
-                            if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
-                                contactsViewModel.addedContacts.remove(at: index) }
-                        } label: {
-                            ContactsListItemViewAdded(contact: contact)
-                        }
-                    }
-                        .padding(.leading, 20)
-                    Divider()
-                        .padding(.leading, 20)
                     List() {
+                        ForEach(searchResultsAdded) { contact in
+//                            Divider()
+                            Button {
+                                if let index = contactsViewModel.addedContacts.firstIndex(where: { $0.identifier == contact.identifier }) {
+                                    contactsViewModel.addedContacts.remove(at: index) }
+                            } label: {
+                                ContactsListItemViewAdded(contact: contact)
+                            }
+                        }
+//                            .padding(.leading, 20)
+    //                    Divider()
+//                        .padding(.leading, 20)
+                    
                         ForEach(searchResults.filter { $0.firstName != "" || $0.lastName != "" } ) { contact in
                             if !contactsViewModel.addedContacts.contains { $0.identifier == contact.identifier}  {
                                 Button {
@@ -130,6 +131,14 @@ struct ContactsListView: View {
             return contactsViewModel.allContacts.filter { $0.firstName.contains(searchText) || $0.lastName.contains(searchText)}
         }
     }
+    
+    var searchResultsAdded: [ContactInfo] {
+        if searchText.isEmpty {
+            return contactsViewModel.addedContacts
+        } else {
+            return contactsViewModel.addedContacts.filter { $0.firstName.contains(searchText) || $0.lastName.contains(searchText)}
+        }
+    }
 }
 
 struct ContactsListItemView: View {
@@ -171,7 +180,7 @@ struct ContactsListItemViewAdded: View {
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color.sosietyGreen)
                     .opacity(isAdded ? 1 : 0)
-                    .padding(.trailing, 25)
+//                    .padding(.trailing, 25)
                 //            else {
                 //                Image(systemName:"checkmark.circle")
                 //                    .font(.system(size: 16, weight: .bold))

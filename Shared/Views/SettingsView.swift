@@ -42,7 +42,7 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
 //        .navigationBackButton(color: .black, text: "Back")
-        .fullScreenCover(isPresented: $isPresented) {
+        .sheet(isPresented: $isPresented) {
             ContactsListView(isPresented: $isPresented)
         }
     }
