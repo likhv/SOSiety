@@ -44,8 +44,7 @@ struct MainScreenView: View {
                 }
                 TumblerView(isSOS: $viewModel.isSOS, isFAQOpened: $isFAQOpened)
                     .offset(y: tumblerOffset)
-                
-                HeaderView(headerText: viewModel.isSOS ? "SOS mode\nlaunched" : "Everything\nis ready")
+                HeaderView(headerText: viewModel.isSOS ? "SOS mode is on" : "All set. Activate if you need support")
                     .opacity(headerOpacity)
                     .offset(y: tumblerOffset/4)
                 AdviceTabView(isFAQPresenting: $isFAQOpened)
@@ -56,11 +55,11 @@ struct MainScreenView: View {
                     Button { toggleFAQ() } label: {
                         VStack {
                             HStack {
-                                Text(isFAQOpened ? "Close advice" : "Legal advice")
+                                Text(isFAQOpened ? "Hide advice" : "Legal advice")
                                     .font(.system(size: 18, weight: .medium))
                                     .padding(.bottom, 5)
                                 Image(systemName: "multiply")
-                                    .font(.system(size: 18, weight: .medium))
+                                    .font(.system(size: isFAQOpened ? 18 : 0, weight: .medium))
                                     .padding(.bottom, 4)
                                     .opacity(isFAQOpened ? 1 : 0)
                             }
@@ -250,10 +249,10 @@ struct TumblerView: View {
                 .overlay(
                     ZStack {
                         if Locale.preferredLanguages[0].prefix(2) == "ru" {
-                            Text(isSOS ? "Смахни влево, чтобы его выключить" : "Смахни вправо, чтобы включить режим SOS")
+                            Text(isSOS ? "Свайп чтобы остановить" : "Свайп чтобы включить")
                                 .font(.system(size: 18, weight: .regular))
                                 .foregroundColor(.sosietyPaper.opacity(0.8))
-                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .padding(!isSOS ? .leading : .trailing, 5)
                                 .animation(.easeInOut, value: isSOS)
                                 .multilineTextAlignment(.center)
                                 .opacity(textOpacity)
@@ -261,15 +260,15 @@ struct TumblerView: View {
                             Text(isSOS ? "Swipe vers la gauche pour le désactiver" : "Swipe vers la droite pour activer le mode SOS")
                                 .font(.system(size: 18, weight: .regular))
                                 .foregroundColor(.sosietyPaper.opacity(0.8))
-                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .padding(!isSOS ? .leading : .trailing, 5)
                                 .animation(.easeInOut, value: isSOS)
                                 .multilineTextAlignment(.center)
                                 .opacity(textOpacity)
                         } else {
-                            Text(isSOS ? "Swipe left to turn it off" : "Swipe right to activate the SOS mode")
+                            Text(isSOS ? "Slide to turn off" : "Slide to activate")
                                 .font(.system(size: 18, weight: .regular))
                                 .foregroundColor(.sosietyPaper.opacity(0.8))
-                                .padding(!isSOS ? .leading : .trailing, 10)
+                                .padding(!isSOS ? .leading : .trailing, 5)
                                 .animation(.easeInOut, value: isSOS)
                                 .multilineTextAlignment(.center)
                                 .opacity(textOpacity)

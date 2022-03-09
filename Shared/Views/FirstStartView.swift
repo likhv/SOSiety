@@ -19,11 +19,11 @@ struct FirstStartView: View {
         ZStack {
             Color.sosietyPaper.ignoresSafeArea()
             if Locale.preferredLanguages[0].prefix(2) == "ru" {
-                HeaderView(headerText: SOSViewModel.userName == "" ? "Пожалуйста, представься. Как тебя зовут?" : "\(SOSViewModel.userName), выбери контакты, которые ты бы хотел уведомить в случае задержания")
+                HeaderView(headerText: SOSViewModel.userName == "" ? "Как тебя зовут?" : "\(SOSViewModel.userName), выбери контакты, которые ты бы хотел уведомить в случае задержания")
             } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
                 HeaderView(headerText: SOSViewModel.userName == "" ? "Présente-toi. Comment t'appelles tu?" : "\(SOSViewModel.userName), sélectionne les contacts que tu souhaiterais notifier en cas de détention")
             } else {
-                HeaderView(headerText: SOSViewModel.userName == "" ? "Introduce yourself. What’s your name?" : "\(SOSViewModel.userName), select contacts you’d like to notify in case of detention")
+                HeaderView(headerText: SOSViewModel.userName == "" ? "What’s your name?" : "\(SOSViewModel.userName), select contacts you’d like to notify")
             }
             
             if SOSViewModel.userName == "" {
@@ -46,6 +46,7 @@ struct FirstStartView: View {
                                 }
                             }
                         }).padding(25)
+                    
             } else {
                 Button { isContactsPresenting = true } label : {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -65,7 +66,7 @@ struct FirstStartView: View {
                                         .foregroundColor(.white)
                                         .font(.system(size: 16, weight: .medium))
                                 } else {
-                                    Text("Add emergency contacts")
+                                    Text("Select contacts")
                                         .foregroundColor(.white)
                                         .font(.system(size: 16, weight: .medium))
                                 }
@@ -107,7 +108,7 @@ struct FirstStartView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isContactsPresenting) {
+        .sheet(isPresented: $isContactsPresenting) {
             ContactsListView(isPresented: $isContactsPresenting)
         }
     }
@@ -184,7 +185,7 @@ struct FirstStartAddContactView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 50) {
             
-            Text("\(SOSViewModel.userName),\nlet's choose contacts\nyou want to inform")
+            Text("\(SOSViewModel.userName), select contacts you’d like to notify")
                 .foregroundColor(.black)
                 .font(.title)
                 .fontWeight(.bold)
@@ -200,7 +201,7 @@ struct FirstStartAddContactView: View {
                                 Image(systemName: "person.badge.plus")
                                     .foregroundColor(.white)
                                     .font(.system(size: 18, weight: .medium))
-                                Text("Choose contacts")
+                                Text("Select contacts")
                                     .foregroundColor(.white)
                                     .font(.system(size: 16, weight: .medium))
                             }

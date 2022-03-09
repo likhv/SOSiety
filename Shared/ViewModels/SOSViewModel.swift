@@ -25,10 +25,11 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var userName: String = ""
     @Published var firstScreenPresented: Bool = true
     @Published var enAdviceList: [Advice] = [
-        Advice(text: "Stay calm and confident. Don’t panic and don’t resist."),
-        Advice(text: "Don’t be provoked. We strongly recommend you avoid answering any questions and signing anything, especially blank sheets of paper."),
-        Advice(text: "If possible, find out the official reason of your detention. Try to memorise and/or even to photograph / to record on video the details of the detention, including names and titles of policemen and their distinguishing features."),
-        Advice(text: "It is advisable to ask any witnesses for their contact details"),
+        Advice(text: "Stay calm and confident. Don’t panic, don’t resist and don’t be provoked"),
+        Advice(text: "Avoid answering any questions and signing anything"),
+        Advice(text: "Find out the official reason of your detention"),
+        Advice(text: "Collect the details, including names and titles of policemen"),
+        Advice(text: "Ask any witnesses for their contact details"),
 //        Advice(text: "Ask those who witnessed your arrest to share their contacts")
     ]
     @Published var ruAdviceList: [Advice] = [
@@ -103,7 +104,7 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
           let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
         
         for contact in contacts {
-            let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "#SOSiety\n\n\(userName) reported the fact of arrest.\n\nHis current location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)\n\nInstuctions: https://readymag.com/3449727" ]
+            let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "#SOSiety\n\(userName) reported the fact of detention.\n\nCurrent location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)\n\nWhat to do next: https://readymag.com/3449727" ]
 
             AF.request(url, method: .post, parameters: parameters)
                   

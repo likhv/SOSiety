@@ -121,7 +121,7 @@ struct SettingsContactsListItemView: View {
                 }
                 HStack {
                     if Locale.preferredLanguages[0].prefix(2) == "ru" {
-                        Text("Делиться местонахождением в экстренном случае")
+                        Text("Делиться местонахождением")
                             .font(.system(size: 15, weight: .regular))
                             .padding(.top, 5)
                     } else if Locale.preferredLanguages[0].prefix(2) == "fr" {
@@ -129,7 +129,7 @@ struct SettingsContactsListItemView: View {
                             .font(.system(size: 15, weight: .regular))
                             .padding(.top, 5)
                     } else {
-                        Text("Share location in case of emergency")
+                        Text("Share location")
                             .font(.system(size: 15, weight: .regular))
                             .padding(.top, 5)
                     }
