@@ -101,14 +101,14 @@ class SOSViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("Sms sending")
         self.statusConsole.append("Notification sending")
 
-          let url = "https://api.twilio.com/2010-04-01/Accounts/ACe684f07971128ca114d257bac6981ea0/Messages"
+          let url = ""
         
         for contact in contacts {
             let parameters = ["From": "+19036485850", "To": contact.phoneNumber?.stringValue, "Body": "#SOSiety\n\(userName) reported the fact of detention.\n\nCurrent location: https://www.google.com/maps/place/\(locationManager?.location?.coordinate.latitude ?? 0),\(locationManager?.location?.coordinate.longitude ?? 0)\n\nWhat to do next: https://readymag.com/3449727" ]
 
             AF.request(url, method: .post, parameters: parameters)
                   
-              .authenticate(username: "ACe684f07971128ca114d257bac6981ea0", password: "4588dd65f127f5586583680a5feac55d")
+              .authenticate(username: "", password: "")
               .responseJSON { response in
                   self.statusConsole[0] = "Notification sent"
             }
